@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.social.api.social.v1;
+
+option go_package = "pkg/api/social;social";
+
+enum FriendRequestStatus {
+  STATUS_PENDING = 0;
+  STATUS_ACCEPTED = 1;
+  STATUS_DECLINED = 2;
+
+  reserved 3 to max;
+}
+
+message Pagination {
+  uint32 limit = 1;
+  optional uint32 cursor = 2;
+  optional uint32 next_cursor = 3;
+}
+
+message FriendRequest {
+  uint32 id = 1;
+  uint32 sender_id = 2;
+  uint32 receiver_id = 3;
+  FriendRequestStatus status = 4;
+}
+
+
+
+message SendFriendRequestRequest {
+  uint32 user_id = 1;
+}
+message SendFriendRequestResponse {
+  FriendRequest request = 1;
+}
+
+
+
+message ListRequestsRequest {
+  uint32 user_id = 1;
+}
+message ListRequestsResponse {
+  repeated FriendRequest requests = 1;
+  Pagination pagination = 2;
+}
+
+
+
+message AcceptFriendRequestRequest {
+  uint32 request_id = 1;
+}
+message AcceptFriendRequestResponse {
+  FriendRequest request = 1;
+}
+
+
+
+message DeclineFriendRequestRequest {
+  uint32 request_id = 1;
+}
+message DeclineFriendRequestResponse {
+  FriendRequest request = 1;
+}
+
+
+
+message RemoveFriendRequest {
+  uint32 user_id = 1;
+}
+message RemoveFriendResponse {}
+
+
+
+message ListFriendsRequest {
+  uint32 user_id = 1;
+  Pagination pagination = 2;
+}
+message ListFriendsResponse {
+  repeated uint32 friend_user_ids = 1;
+  Pagination pagination = 2;
+}

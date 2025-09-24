@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.social.api.social.v1;
+
+option go_package = "pkg/api/social;social";
+
+import "api/social/v1/messages.proto";
+
+
+
+service SocialService {
+  rpc SendFriendRequest(SendFriendRequestRequest) returns (SendFriendRequestResponse) {}
+  rpc ListRequests(ListRequestsRequest) returns (ListRequestsResponse) {}
+  rpc AcceptFriendRequest(AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse) {}
+  rpc DeclineFriendRequest(DeclineFriendRequestRequest) returns (DeclineFriendRequestResponse) {}
+  rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse) {}
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse) {}
+}
+
