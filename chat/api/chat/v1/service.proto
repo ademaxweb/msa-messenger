@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.chat.api.v1;
+
+option go_package = "pkg/api/chat;chat";
+
+import "api/chat/v1/messages.proto";
+
+service ChatService {
+  rpc CreateDirectChat(CreateDirectChatRequest) returns (CreateDirectChatResponse) {}
+  rpc GetChat(GetChatRequest) returns (GetChatResponse) {}
+  rpc ListUserChats(ListUserChatsRequest) returns (ListUserChatsResponse) {}
+  rpc ListChatMembers(ListChatMembersRequest) returns (ListChatMembersResponse) {}
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse) {}
+  rpc StreamMessages(StreamMessagesRequest) returns (stream StreamMessagesResponse) {}
+}
