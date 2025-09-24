@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.auth.api.auth.v1;
+
+option go_package = "pkg/api/auth;auth";
+
+message Credentials {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterRequest {
+  Credentials credentials = 1;
+}
+
+message Token {
+  string access_token = 1;
+  string refresh_token = 2;
+  uint32 user_id = 3;
+}
+
+message RegisterResponse {
+  uint32 user_id = 1;
+}
+
+
+
+message LoginRequest {
+  Credentials credentials = 1;
+}
+message LoginResponse {
+  Token token = 1;
+}
+
+
+
+message RefreshRequest {
+  string refresh_token = 1;
+}
+message RefreshResponse {
+  Token token = 1;
+}

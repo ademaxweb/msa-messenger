@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.auth.api.auth.v1;
+
+option go_package = "pkg/api/auth;auth";
+
+import "api/auth/v1/messages.proto";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Refresh(RefreshRequest) returns (RefreshResponse) {}
+}
