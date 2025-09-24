@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.users.api.users.v1;
+
+import "api/users/v1/messages.proto";
+
+option go_package = "pkg/api/users;users";
+
+
+service UsersService {
+  rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {}
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse) {}
+  rpc GetProfileByID(GetProfileByIDRequest) returns (GetProfileByIDResponse) {}
+  rpc GetProfileByNickname(GetProfileByNicknameRequest) returns (GetProfileByNicknameResponse) {}
+  rpc SearchProfileByNickname(SearchProfileByNicknameRequest) returns (SearchProfileByNicknameResponse) {}
+}
