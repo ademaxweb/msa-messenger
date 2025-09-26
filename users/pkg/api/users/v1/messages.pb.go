@@ -21,16 +21,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// USER MODEL
+// Модель профиля пользователя системы
 type UserProfile struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Уникальный идентификатор пользователя
+	// Уникальный идентификатор пользователя в системе
 	UserId uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	// Отображаемое имя пользователя
+	// Отображаемое имя пользователя (никнейм)
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	// Поле "О пользователе", статус пользователя
+	// Краткое описание пользователя, статус или информация "О себе"
 	Bio string `protobuf:"bytes,3,opt,name=bio,proto3" json:"bio,omitempty"`
-	// Ссылка на PFP
+	// URL аватара пользователя
 	AvatarUrl     string `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -94,11 +94,15 @@ func (x *UserProfile) GetAvatarUrl() string {
 	return ""
 }
 
+// Параметры пагинации для управления выводом списков
 type Pagination struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Limit         uint32                 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
-	Cursor        *uint32                `protobuf:"varint,2,opt,name=cursor,proto3,oneof" json:"cursor,omitempty"`
-	NextCursor    *uint32                `protobuf:"varint,3,opt,name=next_cursor,json=nextCursor,proto3,oneof" json:"next_cursor,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Максимальное количество элементов на странице
+	Limit uint32 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
+	// Текущая позиция курсора для пагинации (опционально)
+	Cursor *uint32 `protobuf:"varint,2,opt,name=cursor,proto3,oneof" json:"cursor,omitempty"`
+	// Позиция курсора для следующей страницы результатов (опционально)
+	NextCursor    *uint32 `protobuf:"varint,3,opt,name=next_cursor,json=nextCursor,proto3,oneof" json:"next_cursor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -154,16 +158,16 @@ func (x *Pagination) GetNextCursor() uint32 {
 	return 0
 }
 
-// CREATE USER
+// Запрос на создание нового профиля пользователя
 type CreateProfileRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Уникальный идентификтор пользователя ??? [По идеи ID генерируется сервисом, а не получается на вход...]
+	// Уникальный идентификатор пользователя
 	UserId uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	// Отображаемое имя пользователя
+	// Отображаемое имя пользователя (обязательное поле)
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	// Поле "О пользователе", статус пользователя
+	// Краткое описание пользователя (опционально)
 	Bio *string `protobuf:"bytes,3,opt,name=bio,proto3,oneof" json:"bio,omitempty"`
-	// Ссылка на PFP
+	// URL аватара пользователя (опционально)
 	AvatarUrl     *string `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3,oneof" json:"avatar_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -227,9 +231,11 @@ func (x *CreateProfileRequest) GetAvatarUrl() string {
 	return ""
 }
 
+// Ответ на запрос создания профиля пользователя
 type CreateProfileResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserProfile   *UserProfile           `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Созданный профиль пользователя
+	UserProfile   *UserProfile `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -271,16 +277,16 @@ func (x *CreateProfileResponse) GetUserProfile() *UserProfile {
 	return nil
 }
 
-// UPDATE USER
+// Запрос на обновление существующего профиля пользователя
 type UpdateProfileRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Уникальный идентификтор пользователя ??? [По идеи ID генерируется сервисом, а не получается на вход...]
+	// Уникальный идентификатор обновляемого пользователя
 	UserId uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	// Отображаемое имя пользователя
+	// Новое отображаемое имя пользователя (опционально)
 	Nickname *string `protobuf:"bytes,2,opt,name=nickname,proto3,oneof" json:"nickname,omitempty"`
-	// Поле "О пользователе", статус пользователя
+	// Новое описание пользователя (опционально)
 	Bio *string `protobuf:"bytes,3,opt,name=bio,proto3,oneof" json:"bio,omitempty"`
-	// Ссылка на PFP
+	// Новый URL аватара пользователя (опционально)
 	AvatarUrl     *string `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3,oneof" json:"avatar_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -344,9 +350,11 @@ func (x *UpdateProfileRequest) GetAvatarUrl() string {
 	return ""
 }
 
+// Ответ на запрос обновления профиля пользователя
 type UpdateProfileResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserProfile   *UserProfile           `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Обновленный профиль пользователя
+	UserProfile   *UserProfile `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -388,11 +396,11 @@ func (x *UpdateProfileResponse) GetUserProfile() *UserProfile {
 	return nil
 }
 
-// GET USER BY ID
+// Запрос на получение профиля пользователя по идентификатору
 type GetProfileByIDRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Уникальный идентификтор пользователя ??? [По идеи ID генерируется сервисом, а не получается на вход...]
-	Id            uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Уникальный идентификатор искомого пользователя
+	UserId        uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -427,16 +435,18 @@ func (*GetProfileByIDRequest) Descriptor() ([]byte, []int) {
 	return file_api_users_v1_messages_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *GetProfileByIDRequest) GetId() uint32 {
+func (x *GetProfileByIDRequest) GetUserId() uint32 {
 	if x != nil {
-		return x.Id
+		return x.UserId
 	}
 	return 0
 }
 
+// Ответ на запрос получения профиля по идентификатору
 type GetProfileByIDResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserProfile   *UserProfile           `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Найденный профиль пользователя
+	UserProfile   *UserProfile `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -478,10 +488,10 @@ func (x *GetProfileByIDResponse) GetUserProfile() *UserProfile {
 	return nil
 }
 
-// GET USER BY NICKNAME
+// Запрос на получение профиля пользователя по никнейму
 type GetProfileByNicknameRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Отображаемое имя пользователя
+	// Отображаемое имя пользователя для поиска
 	Nickname      string `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -524,9 +534,11 @@ func (x *GetProfileByNicknameRequest) GetNickname() string {
 	return ""
 }
 
+// Ответ на запрос получения профиля по никнейму
 type GetProfileByNicknameResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserProfile   *UserProfile           `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Найденный профиль пользователя
+	UserProfile   *UserProfile `protobuf:"bytes,1,opt,name=user_profile,json=userProfile,proto3" json:"user_profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -568,11 +580,12 @@ func (x *GetProfileByNicknameResponse) GetUserProfile() *UserProfile {
 	return nil
 }
 
-// SEARCH USER BY NICKNAME
+// Запрос на поиск пользователей по частичному совпадению никнейма
 type SearchProfileByNicknameRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Строка поискового запроса (Отображаемое имя пользователя)
-	Query         string      `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	// Строка поискового запроса (часть никнейма для поиска)
+	Query string `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	// Параметры пагинации для управления результатами поиска
 	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -622,10 +635,13 @@ func (x *SearchProfileByNicknameRequest) GetPagination() *Pagination {
 	return nil
 }
 
+// Ответ на запрос поиска пользователей
 type SearchProfileByNicknameResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Results       []*UserProfile         `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Список найденных профилей пользователей
+	Results []*UserProfile `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	// Информация о пагинации для навигации по результатам
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -713,9 +729,9 @@ const file_api_users_v1_messages_proto_rawDesc = "" +
 	"\x04_bioB\r\n" +
 	"\v_avatar_url\"~\n" +
 	"\x15UpdateProfileResponse\x12e\n" +
-	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"'\n" +
-	"\x15GetProfileByIDRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\"\x7f\n" +
+	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"0\n" +
+	"\x15GetProfileByIDRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\rR\x06userId\"\x7f\n" +
 	"\x16GetProfileByIDResponse\x12e\n" +
 	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"9\n" +
 	"\x1bGetProfileByNicknameRequest\x12\x1a\n" +

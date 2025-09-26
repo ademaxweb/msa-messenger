@@ -30,10 +30,15 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersServiceClient interface {
+	// Создание нового профиля пользователя
 	CreateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*CreateProfileResponse, error)
+	// Обновление существующего профиля пользователя
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*UpdateProfileResponse, error)
+	// Получение профиля пользователя по идентификатору
 	GetProfileByID(ctx context.Context, in *GetProfileByIDRequest, opts ...grpc.CallOption) (*GetProfileByIDResponse, error)
+	// Получение профиля пользователя по никнейму
 	GetProfileByNickname(ctx context.Context, in *GetProfileByNicknameRequest, opts ...grpc.CallOption) (*GetProfileByNicknameResponse, error)
+	// Поиск пользователей по частичному совпадению никнейма
 	SearchProfileByNickname(ctx context.Context, in *SearchProfileByNicknameRequest, opts ...grpc.CallOption) (*SearchProfileByNicknameResponse, error)
 }
 
@@ -99,10 +104,15 @@ func (c *usersServiceClient) SearchProfileByNickname(ctx context.Context, in *Se
 // All implementations must embed UnimplementedUsersServiceServer
 // for forward compatibility.
 type UsersServiceServer interface {
+	// Создание нового профиля пользователя
 	CreateProfile(context.Context, *CreateProfileRequest) (*CreateProfileResponse, error)
+	// Обновление существующего профиля пользователя
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*UpdateProfileResponse, error)
+	// Получение профиля пользователя по идентификатору
 	GetProfileByID(context.Context, *GetProfileByIDRequest) (*GetProfileByIDResponse, error)
+	// Получение профиля пользователя по никнейму
 	GetProfileByNickname(context.Context, *GetProfileByNicknameRequest) (*GetProfileByNicknameResponse, error)
+	// Поиск пользователей по частичному совпадению никнейма
 	SearchProfileByNickname(context.Context, *SearchProfileByNicknameRequest) (*SearchProfileByNicknameResponse, error)
 	mustEmbedUnimplementedUsersServiceServer()
 }

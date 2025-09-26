@@ -7,6 +7,7 @@
 package users
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -24,13 +25,13 @@ var File_api_users_v1_service_proto protoreflect.FileDescriptor
 
 const file_api_users_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1aapi/users/v1/service.proto\x125github.com.ademaxweb.msa_messenger.users.api.users.v1\x1a\x1bapi/users/v1/messages.proto2\xaf\a\n" +
-	"\fUsersService\x12\xac\x01\n" +
-	"\rCreateProfile\x12K.github.com.ademaxweb.msa_messenger.users.api.users.v1.CreateProfileRequest\x1aL.github.com.ademaxweb.msa_messenger.users.api.users.v1.CreateProfileResponse\"\x00\x12\xac\x01\n" +
-	"\rUpdateProfile\x12K.github.com.ademaxweb.msa_messenger.users.api.users.v1.UpdateProfileRequest\x1aL.github.com.ademaxweb.msa_messenger.users.api.users.v1.UpdateProfileResponse\"\x00\x12\xaf\x01\n" +
-	"\x0eGetProfileByID\x12L.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByIDRequest\x1aM.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByIDResponse\"\x00\x12\xc1\x01\n" +
-	"\x14GetProfileByNickname\x12R.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByNicknameRequest\x1aS.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByNicknameResponse\"\x00\x12\xca\x01\n" +
-	"\x17SearchProfileByNickname\x12U.github.com.ademaxweb.msa_messenger.users.api.users.v1.SearchProfileByNicknameRequest\x1aV.github.com.ademaxweb.msa_messenger.users.api.users.v1.SearchProfileByNicknameResponse\"\x00B\x15Z\x13pkg/api/users;usersb\x06proto3"
+	"\x1aapi/users/v1/service.proto\x125github.com.ademaxweb.msa_messenger.users.api.users.v1\x1a\x1bapi/users/v1/messages.proto\x1a\x1cgoogle/api/annotations.proto2\xc5\b\n" +
+	"\fUsersService\x12\xc4\x01\n" +
+	"\rCreateProfile\x12K.github.com.ademaxweb.msa_messenger.users.api.users.v1.CreateProfileRequest\x1aL.github.com.ademaxweb.msa_messenger.users.api.users.v1.CreateProfileResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/api/v1/users\x12\xce\x01\n" +
+	"\rUpdateProfile\x12K.github.com.ademaxweb.msa_messenger.users.api.users.v1.UpdateProfileRequest\x1aL.github.com.ademaxweb.msa_messenger.users.api.users.v1.UpdateProfileResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*2\x17/api/v1/users/{user_id}\x12\xce\x01\n" +
+	"\x0eGetProfileByID\x12L.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByIDRequest\x1aM.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByIDResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v1/users/{user_id}\x12\xe2\x01\n" +
+	"\x14GetProfileByNickname\x12R.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByNicknameRequest\x1aS.github.com.ademaxweb.msa_messenger.users.api.users.v1.GetProfileByNicknameResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/users/by-nickname\x12\xe6\x01\n" +
+	"\x17SearchProfileByNickname\x12U.github.com.ademaxweb.msa_messenger.users.api.users.v1.SearchProfileByNicknameRequest\x1aV.github.com.ademaxweb.msa_messenger.users.api.users.v1.SearchProfileByNicknameResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/api/v1/users/searchB\x15Z\x13pkg/api/users;usersb\x06proto3"
 
 var file_api_users_v1_service_proto_goTypes = []any{
 	(*CreateProfileRequest)(nil),            // 0: github.com.ademaxweb.msa_messenger.users.api.users.v1.CreateProfileRequest

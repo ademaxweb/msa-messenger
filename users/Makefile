@@ -1,4 +1,7 @@
-SHELL := /usr/bin/bash
+include vendor.proto.mk
+
+# Путь до завендореных protobuf файлов
+VENDOR_PROTO_PATH := $(CURDIR)/vendor.protobuf
 
 # Используем bin в текущей директории для установки плагинов protoc
 LOCAL_BIN := $(CURDIR)/bin
@@ -12,6 +15,9 @@ PROTO_PATH := $(CURDIR)/api
 # Путь до сгенеренных .pb.go файлов
 PKG_PROTO_PATH := $(CURDIR)/pkg
 
+# Путь до завендореных protobuf файлов
+VENDOR_PROTO_PATH := $(CURDIR)/vendor.protobuf
+
 # устанавливаем необходимые плагины
 .bin-deps: export GOBIN := $(LOCAL_BIN)
 .bin-deps:
@@ -19,15 +25,18 @@ PKG_PROTO_PATH := $(CURDIR)/pkg
 
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+
 
 # генерация .go файлов с помощью protoc
 .protoc-generate:
 	mkdir -p $(PKG_PROTO_PATH)
-	$(PROTOC) --proto_path=$(CURDIR) \
+	$(PROTOC) -I $(VENDOR_PROTO_PATH) --proto_path=$(CURDIR) \
 	--go_out=$(PKG_PROTO_PATH) --go_opt paths=source_relative \
 	--go-grpc_out=$(PKG_PROTO_PATH) --go-grpc_opt paths=source_relative \
-	$(PROTO_PATH)/users/v1/service.proto \
-	$(PROTO_PATH)/users/v1/messages.proto
+	--grpc-gateway_out=$(PKG_PROTO_PATH) --grpc-gateway_opt paths=source_relative --grpc-gateway_opt generate_unbound_methods=true \
+	$(PROTO_PATH)/notes/messages.proto $(PROTO_PATH)/notes/service.proto
+
 
 # go mod tidy
 .tidy:
@@ -36,22 +45,18 @@ PKG_PROTO_PATH := $(CURDIR)/pkg
 # Генерация кода из protobuf
 generate: .bin-deps .protoc-generate .tidy
 
-# Генерация кода из protobuf
-generate: .bin-deps .protoc-generate
-
 # Билд приложения
 build:
-	go build -o $(LOCAL_BIN) ./cmd/users/client
-	go build -o $(LOCAL_BIN) ./cmd/users/server
-
+	go build -o $(LOCAL_BIN) ./cmd/notes/client
+	go build -o $(LOCAL_BIN) ./cmd/notes/server 
+	
 # Объявляем, что текущие команды не являются файлами и
 # интсрументируем Makefile не искать изменения в файловой системе
 .PHONY: \
 	.bin-deps \
 	.protoc-generate \
 	.tidy \
+	.vendor-protovalidate \
+	vendor \
 	generate \
 	build
-
-
-
