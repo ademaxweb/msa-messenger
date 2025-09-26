@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.chat.api.v1;
+
+option go_package = "pkg/api/chat;chat";
+
+import "api/chat/v1/messages.proto";
+import "google/api/annotations.proto";
+
+// Сервис для управления чатами и сообщениями
+service ChatService {
+  // Создание личного чата между текущим пользователем и указанным участником
+  rpc CreateDirectChat(CreateDirectChatRequest) returns (CreateDirectChatResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/chats/direct"
+      body: "*"
+    };
+  }
+
+  // Получение информации о конкретном чате по его идентификатору
+  rpc GetChat(GetChatRequest) returns (GetChatResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/chats/{chat_id}"
+    };
+  }
+
+  // Получение списка всех чатов текущего пользователя с пагинацией
+  rpc ListUserChats(ListUserChatsRequest) returns (ListUserChatsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/chats"
+    };
+  }
+
+  // Получение списка участников указанного чата
+  rpc ListChatMembers(ListChatMembersRequest) returns (ListChatMembersResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/chats/{chat_id}/members"
+    };
+  }
+
+  // Отправка нового сообщения в указанный чат
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/chats/{chat_id}/messages"
+      body: "*"
+    };
+  }
+
+  // Получение истории сообщений из указанного чата с пагинацией
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/chats/{chat_id}/messages"
+    };
+  }
+
+  rpc StreamMessages(StreamMessagesRequest) returns (stream StreamMessagesResponse) {}
+}
