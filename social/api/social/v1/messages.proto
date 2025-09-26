@@ -4,6 +4,8 @@ package github.com.ademaxweb.msa_messenger.social.api.social.v1;
 
 option go_package = "pkg/api/social;social";
 
+import "buf/validate/validate.proto";
+
 // Статус заявки в друзья
 enum FriendRequestStatus {
   // Заявка ожидает рассмотрения получателем
@@ -41,7 +43,9 @@ message FriendRequest {
 // Запрос на отправку заявки в друзья
 message SendFriendRequestRequest {
   // Идентификатор пользователя, которому отправляется заявка в друзья
-  uint32 user_id = 1;
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ на отправку заявки в друзья
@@ -53,7 +57,9 @@ message SendFriendRequestResponse {
 // Запрос на получение списка заявок в друзья
 message ListRequestsRequest {
   // Идентификатор пользователя, для которого запрашиваются заявки
-  uint32 user_id = 1;
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ с списком заявок в друзья
@@ -67,7 +73,9 @@ message ListRequestsResponse {
 // Запрос на принятие заявки в друзья
 message AcceptFriendRequestRequest {
   // Идентификатор заявки, которую необходимо принять
-  uint32 request_id = 1;
+  uint32 request_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ на принятие заявки в друзья
@@ -79,7 +87,9 @@ message AcceptFriendRequestResponse {
 // Запрос на отклонение заявки в друзья
 message DeclineFriendRequestRequest {
   // Идентификатор заявки, которую необходимо отклонить
-  uint32 request_id = 1;
+  uint32 request_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ на отклонение заявки в друзья
@@ -91,7 +101,9 @@ message DeclineFriendRequestResponse {
 // Запрос на удаление пользователя из списка друзей
 message RemoveFriendRequest {
   // Идентификатор пользователя, которого необходимо удалить из друзей
-  uint32 user_id = 1;
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ на удаление пользователя из друзей
@@ -100,7 +112,9 @@ message RemoveFriendResponse {}
 // Запрос на получение списка друзей пользователя
 message ListFriendsRequest {
   // Идентификатор пользователя, список друзей которого запрашивается
-  uint32 user_id = 1;
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
   // Пагинация
   CursorPagination pagination = 2;
 }

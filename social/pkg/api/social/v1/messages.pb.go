@@ -7,6 +7,7 @@
 package social
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -25,11 +26,11 @@ const (
 type FriendRequestStatus int32
 
 const (
-	// Ожидание
+	// Заявка ожидает рассмотрения получателем
 	FriendRequestStatus_STATUS_PENDING FriendRequestStatus = 0
-	// Принята
+	// Заявка была принята получателем, пользователи стали друзьями
 	FriendRequestStatus_STATUS_ACCEPTED FriendRequestStatus = 1
-	// Отклонена
+	// Заявка была отклонена получателем
 	FriendRequestStatus_STATUS_DECLINED FriendRequestStatus = 2
 )
 
@@ -75,29 +76,32 @@ func (FriendRequestStatus) EnumDescriptor() ([]byte, []int) {
 }
 
 // Курсорная пагинация
-type Pagination struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Limit         uint32                 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
-	Cursor        *uint32                `protobuf:"varint,2,opt,name=cursor,proto3,oneof" json:"cursor,omitempty"`
-	NextCursor    *uint32                `protobuf:"varint,3,opt,name=next_cursor,json=nextCursor,proto3,oneof" json:"next_cursor,omitempty"`
+type CursorPagination struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Максимальное количество элементов на странице
+	Limit uint32 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
+	// Текущая позиция курсора (опционально)
+	Cursor *uint32 `protobuf:"varint,2,opt,name=cursor,proto3,oneof" json:"cursor,omitempty"`
+	// Следующая позиция курсора для получения следующей страницы (опционально)
+	NextCursor    *uint32 `protobuf:"varint,3,opt,name=next_cursor,json=nextCursor,proto3,oneof" json:"next_cursor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Pagination) Reset() {
-	*x = Pagination{}
+func (x *CursorPagination) Reset() {
+	*x = CursorPagination{}
 	mi := &file_api_social_v1_messages_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Pagination) String() string {
+func (x *CursorPagination) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Pagination) ProtoMessage() {}
+func (*CursorPagination) ProtoMessage() {}
 
-func (x *Pagination) ProtoReflect() protoreflect.Message {
+func (x *CursorPagination) ProtoReflect() protoreflect.Message {
 	mi := &file_api_social_v1_messages_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -109,26 +113,26 @@ func (x *Pagination) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Pagination.ProtoReflect.Descriptor instead.
-func (*Pagination) Descriptor() ([]byte, []int) {
+// Deprecated: Use CursorPagination.ProtoReflect.Descriptor instead.
+func (*CursorPagination) Descriptor() ([]byte, []int) {
 	return file_api_social_v1_messages_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Pagination) GetLimit() uint32 {
+func (x *CursorPagination) GetLimit() uint32 {
 	if x != nil {
 		return x.Limit
 	}
 	return 0
 }
 
-func (x *Pagination) GetCursor() uint32 {
+func (x *CursorPagination) GetCursor() uint32 {
 	if x != nil && x.Cursor != nil {
 		return *x.Cursor
 	}
 	return 0
 }
 
-func (x *Pagination) GetNextCursor() uint32 {
+func (x *CursorPagination) GetNextCursor() uint32 {
 	if x != nil && x.NextCursor != nil {
 		return *x.NextCursor
 	}
@@ -138,13 +142,13 @@ func (x *Pagination) GetNextCursor() uint32 {
 // Заявка в друзья
 type FriendRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID заявки
+	// Уникальный идентификатор заявки
 	Id uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	// ID отправителя
+	// Идентификатор пользователя, отправившего заявку
 	SenderId uint32 `protobuf:"varint,2,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
-	// ID получателя
+	// Идентификатор пользователя, получившего заявку
 	ReceiverId uint32 `protobuf:"varint,3,opt,name=receiver_id,json=receiverId,proto3" json:"receiver_id,omitempty"`
-	// Статус заявки
+	// Текущий статус заявки
 	Status        FriendRequestStatus `protobuf:"varint,4,opt,name=status,proto3,enum=github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatus" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -208,10 +212,10 @@ func (x *FriendRequest) GetStatus() FriendRequestStatus {
 	return FriendRequestStatus_STATUS_PENDING
 }
 
-// [Запрос] Отправка заявки в друзья
+// Запрос на отправку заявки в друзья
 type SendFriendRequestRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID пользователя, которому отправляется заявка
+	// Идентификатор пользователя, которому отправляется заявка в друзья
 	UserId        uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -254,10 +258,11 @@ func (x *SendFriendRequestRequest) GetUserId() uint32 {
 	return 0
 }
 
-// [Ответ] Отправка заявки в друзья
+// Ответ на отправку заявки в друзья
 type SendFriendRequestResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Request       *FriendRequest         `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Созданная заявка в друзья
+	Request       *FriendRequest `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -299,10 +304,11 @@ func (x *SendFriendRequestResponse) GetRequest() *FriendRequest {
 	return nil
 }
 
-// [Запрос] Отображение списка заявок в друзья
+// Запрос на получение списка заявок в друзья
 type ListRequestsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор пользователя, для которого запрашиваются заявки
+	UserId        uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -344,11 +350,13 @@ func (x *ListRequestsRequest) GetUserId() uint32 {
 	return 0
 }
 
-// [Ответ] Отображение списка заявок в друзья
+// Ответ с списком заявок в друзья
 type ListRequestsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Requests      []*FriendRequest       `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Список заявок в друзья
+	Requests []*FriendRequest `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
+	// Пагинация
+	Pagination    *CursorPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -390,17 +398,18 @@ func (x *ListRequestsResponse) GetRequests() []*FriendRequest {
 	return nil
 }
 
-func (x *ListRequestsResponse) GetPagination() *Pagination {
+func (x *ListRequestsResponse) GetPagination() *CursorPagination {
 	if x != nil {
 		return x.Pagination
 	}
 	return nil
 }
 
-// [Запрос] Принятие заявки в друзья
+// Запрос на принятие заявки в друзья
 type AcceptFriendRequestRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RequestId     uint32                 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор заявки, которую необходимо принять
+	RequestId     uint32 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -442,10 +451,11 @@ func (x *AcceptFriendRequestRequest) GetRequestId() uint32 {
 	return 0
 }
 
-// [Ответ] Принятие заявки в друзья
+// Ответ на принятие заявки в друзья
 type AcceptFriendRequestResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Request       *FriendRequest         `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Обновленная заявка
+	Request       *FriendRequest `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -487,10 +497,11 @@ func (x *AcceptFriendRequestResponse) GetRequest() *FriendRequest {
 	return nil
 }
 
-// [Запрос] Отклонение заявки в друзья
+// Запрос на отклонение заявки в друзья
 type DeclineFriendRequestRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RequestId     uint32                 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор заявки, которую необходимо отклонить
+	RequestId     uint32 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -532,10 +543,11 @@ func (x *DeclineFriendRequestRequest) GetRequestId() uint32 {
 	return 0
 }
 
-// [Ответ] Отклонение заявки в друзья
+// Ответ на отклонение заявки в друзья
 type DeclineFriendRequestResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Request       *FriendRequest         `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Обновленная заявка
+	Request       *FriendRequest `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -577,10 +589,11 @@ func (x *DeclineFriendRequestResponse) GetRequest() *FriendRequest {
 	return nil
 }
 
-// [Запрос] Удаление пользователя из друзей
+// Запрос на удаление пользователя из списка друзей
 type RemoveFriendRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор пользователя, которого необходимо удалить из друзей
+	UserId        uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -622,7 +635,7 @@ func (x *RemoveFriendRequest) GetUserId() uint32 {
 	return 0
 }
 
-// [Ответ] Удаление пользователя из друзей
+// Ответ на удаление пользователя из друзей
 type RemoveFriendResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -659,11 +672,13 @@ func (*RemoveFriendResponse) Descriptor() ([]byte, []int) {
 	return file_api_social_v1_messages_proto_rawDescGZIP(), []int{11}
 }
 
-// [Запрос] Отображение списка друзей
+// Запрос на получение списка друзей пользователя
 type ListFriendsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор пользователя, список друзей которого запрашивается
+	UserId uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// Пагинация
+	Pagination    *CursorPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -705,18 +720,20 @@ func (x *ListFriendsRequest) GetUserId() uint32 {
 	return 0
 }
 
-func (x *ListFriendsRequest) GetPagination() *Pagination {
+func (x *ListFriendsRequest) GetPagination() *CursorPagination {
 	if x != nil {
 		return x.Pagination
 	}
 	return nil
 }
 
-// [Ответ] Отображение списка друзей
+// Ответ со списком друзей пользователя
 type ListFriendsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	FriendUserIds []uint32               `protobuf:"varint,1,rep,packed,name=friend_user_ids,json=friendUserIds,proto3" json:"friend_user_ids,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Список идентификаторов пользователей, являющихся друзьями
+	FriendUserIds []uint32 `protobuf:"varint,1,rep,packed,name=friend_user_ids,json=friendUserIds,proto3" json:"friend_user_ids,omitempty"`
+	// Пагинация
+	Pagination    *CursorPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -758,7 +775,7 @@ func (x *ListFriendsResponse) GetFriendUserIds() []uint32 {
 	return nil
 }
 
-func (x *ListFriendsResponse) GetPagination() *Pagination {
+func (x *ListFriendsResponse) GetPagination() *CursorPagination {
 	if x != nil {
 		return x.Pagination
 	}
@@ -769,9 +786,8 @@ var File_api_social_v1_messages_proto protoreflect.FileDescriptor
 
 const file_api_social_v1_messages_proto_rawDesc = "" +
 	"\n" +
-	"\x1capi/social/v1/messages.proto\x127github.com.ademaxweb.msa_messenger.social.api.social.v1\"\x80\x01\n" +
-	"\n" +
-	"Pagination\x12\x14\n" +
+	"\x1capi/social/v1/messages.proto\x127github.com.ademaxweb.msa_messenger.social.api.social.v1\x1a\x1bbuf/validate/validate.proto\"\x86\x01\n" +
+	"\x10CursorPagination\x12\x14\n" +
 	"\x05limit\x18\x01 \x01(\rR\x05limit\x12\x1b\n" +
 	"\x06cursor\x18\x02 \x01(\rH\x00R\x06cursor\x88\x01\x01\x12$\n" +
 	"\vnext_cursor\x18\x03 \x01(\rH\x01R\n" +
@@ -783,40 +799,40 @@ const file_api_social_v1_messages_proto_rawDesc = "" +
 	"\tsender_id\x18\x02 \x01(\rR\bsenderId\x12\x1f\n" +
 	"\vreceiver_id\x18\x03 \x01(\rR\n" +
 	"receiverId\x12d\n" +
-	"\x06status\x18\x04 \x01(\x0e2L.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatusR\x06status\"3\n" +
-	"\x18SendFriendRequestRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\"}\n" +
+	"\x06status\x18\x04 \x01(\x0e2L.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatusR\x06status\";\n" +
+	"\x18SendFriendRequestRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\"}\n" +
 	"\x19SendFriendRequestResponse\x12`\n" +
-	"\arequest\x18\x01 \x01(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\arequest\".\n" +
-	"\x13ListRequestsRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\"\xdf\x01\n" +
+	"\arequest\x18\x01 \x01(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\arequest\"6\n" +
+	"\x13ListRequestsRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\"\xe5\x01\n" +
 	"\x14ListRequestsResponse\x12b\n" +
-	"\brequests\x18\x01 \x03(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\brequests\x12c\n" +
+	"\brequests\x18\x01 \x03(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\brequests\x12i\n" +
 	"\n" +
-	"pagination\x18\x02 \x01(\v2C.github.com.ademaxweb.msa_messenger.social.api.social.v1.PaginationR\n" +
-	"pagination\";\n" +
-	"\x1aAcceptFriendRequestRequest\x12\x1d\n" +
+	"pagination\x18\x02 \x01(\v2I.github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPaginationR\n" +
+	"pagination\"C\n" +
+	"\x1aAcceptFriendRequestRequest\x12%\n" +
 	"\n" +
-	"request_id\x18\x01 \x01(\rR\trequestId\"\x7f\n" +
+	"request_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\trequestId\"\x7f\n" +
 	"\x1bAcceptFriendRequestResponse\x12`\n" +
-	"\arequest\x18\x01 \x01(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\arequest\"<\n" +
-	"\x1bDeclineFriendRequestRequest\x12\x1d\n" +
+	"\arequest\x18\x01 \x01(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\arequest\"D\n" +
+	"\x1bDeclineFriendRequestRequest\x12%\n" +
 	"\n" +
-	"request_id\x18\x01 \x01(\rR\trequestId\"\x80\x01\n" +
+	"request_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\trequestId\"\x80\x01\n" +
 	"\x1cDeclineFriendRequestResponse\x12`\n" +
-	"\arequest\x18\x01 \x01(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\arequest\".\n" +
-	"\x13RemoveFriendRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\"\x16\n" +
-	"\x14RemoveFriendResponse\"\x92\x01\n" +
-	"\x12ListFriendsRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\x12c\n" +
+	"\arequest\x18\x01 \x01(\v2F.github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestR\arequest\"6\n" +
+	"\x13RemoveFriendRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\"\x16\n" +
+	"\x14RemoveFriendResponse\"\xa0\x01\n" +
+	"\x12ListFriendsRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\x12i\n" +
 	"\n" +
-	"pagination\x18\x02 \x01(\v2C.github.com.ademaxweb.msa_messenger.social.api.social.v1.PaginationR\n" +
-	"pagination\"\xa2\x01\n" +
+	"pagination\x18\x02 \x01(\v2I.github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPaginationR\n" +
+	"pagination\"\xa8\x01\n" +
 	"\x13ListFriendsResponse\x12&\n" +
-	"\x0ffriend_user_ids\x18\x01 \x03(\rR\rfriendUserIds\x12c\n" +
+	"\x0ffriend_user_ids\x18\x01 \x03(\rR\rfriendUserIds\x12i\n" +
 	"\n" +
-	"pagination\x18\x02 \x01(\v2C.github.com.ademaxweb.msa_messenger.social.api.social.v1.PaginationR\n" +
+	"pagination\x18\x02 \x01(\v2I.github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPaginationR\n" +
 	"pagination*]\n" +
 	"\x13FriendRequestStatus\x12\x12\n" +
 	"\x0eSTATUS_PENDING\x10\x00\x12\x13\n" +
@@ -839,7 +855,7 @@ var file_api_social_v1_messages_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_api_social_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_api_social_v1_messages_proto_goTypes = []any{
 	(FriendRequestStatus)(0),             // 0: github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatus
-	(*Pagination)(nil),                   // 1: github.com.ademaxweb.msa_messenger.social.api.social.v1.Pagination
+	(*CursorPagination)(nil),             // 1: github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPagination
 	(*FriendRequest)(nil),                // 2: github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequest
 	(*SendFriendRequestRequest)(nil),     // 3: github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestRequest
 	(*SendFriendRequestResponse)(nil),    // 4: github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestResponse
@@ -858,11 +874,11 @@ var file_api_social_v1_messages_proto_depIdxs = []int32{
 	0, // 0: github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequest.status:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatus
 	2, // 1: github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestResponse.request:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequest
 	2, // 2: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsResponse.requests:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequest
-	1, // 3: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsResponse.pagination:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.Pagination
+	1, // 3: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsResponse.pagination:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPagination
 	2, // 4: github.com.ademaxweb.msa_messenger.social.api.social.v1.AcceptFriendRequestResponse.request:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequest
 	2, // 5: github.com.ademaxweb.msa_messenger.social.api.social.v1.DeclineFriendRequestResponse.request:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequest
-	1, // 6: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsRequest.pagination:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.Pagination
-	1, // 7: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsResponse.pagination:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.Pagination
+	1, // 6: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsRequest.pagination:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPagination
+	1, // 7: github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsResponse.pagination:type_name -> github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPagination
 	8, // [8:8] is the sub-list for method output_type
 	8, // [8:8] is the sub-list for method input_type
 	8, // [8:8] is the sub-list for extension type_name
