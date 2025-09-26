@@ -7,6 +7,7 @@
 package chat
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -24,14 +25,15 @@ var File_api_chat_v1_service_proto protoreflect.FileDescriptor
 
 const file_api_chat_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x19api/chat/v1/service.proto\x12.github.com.ademaxweb.msa_messenger.chat.api.v1\x1a\x1aapi/chat/v1/messages.proto2\xed\b\n" +
-	"\vChatService\x12\xa7\x01\n" +
-	"\x10CreateDirectChat\x12G.github.com.ademaxweb.msa_messenger.chat.api.v1.CreateDirectChatRequest\x1aH.github.com.ademaxweb.msa_messenger.chat.api.v1.CreateDirectChatResponse\"\x00\x12\x8c\x01\n" +
-	"\aGetChat\x12>.github.com.ademaxweb.msa_messenger.chat.api.v1.GetChatRequest\x1a?.github.com.ademaxweb.msa_messenger.chat.api.v1.GetChatResponse\"\x00\x12\x9e\x01\n" +
-	"\rListUserChats\x12D.github.com.ademaxweb.msa_messenger.chat.api.v1.ListUserChatsRequest\x1aE.github.com.ademaxweb.msa_messenger.chat.api.v1.ListUserChatsResponse\"\x00\x12\xa4\x01\n" +
-	"\x0fListChatMembers\x12F.github.com.ademaxweb.msa_messenger.chat.api.v1.ListChatMembersRequest\x1aG.github.com.ademaxweb.msa_messenger.chat.api.v1.ListChatMembersResponse\"\x00\x12\x98\x01\n" +
-	"\vSendMessage\x12B.github.com.ademaxweb.msa_messenger.chat.api.v1.SendMessageRequest\x1aC.github.com.ademaxweb.msa_messenger.chat.api.v1.SendMessageResponse\"\x00\x12\x9b\x01\n" +
-	"\fListMessages\x12C.github.com.ademaxweb.msa_messenger.chat.api.v1.ListMessagesRequest\x1aD.github.com.ademaxweb.msa_messenger.chat.api.v1.ListMessagesResponse\"\x00\x12\xa3\x01\n" +
+	"\x19api/chat/v1/service.proto\x12.github.com.ademaxweb.msa_messenger.chat.api.v1\x1a\x1aapi/chat/v1/messages.proto\x1a\x1cgoogle/api/annotations.proto2\xba\n" +
+	"\n" +
+	"\vChatService\x12\xc6\x01\n" +
+	"\x10CreateDirectChat\x12G.github.com.ademaxweb.msa_messenger.chat.api.v1.CreateDirectChatRequest\x1aH.github.com.ademaxweb.msa_messenger.chat.api.v1.CreateDirectChatResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v1/chats/direct\x12\xab\x01\n" +
+	"\aGetChat\x12>.github.com.ademaxweb.msa_messenger.chat.api.v1.GetChatRequest\x1a?.github.com.ademaxweb.msa_messenger.chat.api.v1.GetChatResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v1/chats/{chat_id}\x12\xb3\x01\n" +
+	"\rListUserChats\x12D.github.com.ademaxweb.msa_messenger.chat.api.v1.ListUserChatsRequest\x1aE.github.com.ademaxweb.msa_messenger.chat.api.v1.ListUserChatsResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/chats\x12\xcb\x01\n" +
+	"\x0fListChatMembers\x12F.github.com.ademaxweb.msa_messenger.chat.api.v1.ListChatMembersRequest\x1aG.github.com.ademaxweb.msa_messenger.chat.api.v1.ListChatMembersResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/chats/{chat_id}/members\x12\xc3\x01\n" +
+	"\vSendMessage\x12B.github.com.ademaxweb.msa_messenger.chat.api.v1.SendMessageRequest\x1aC.github.com.ademaxweb.msa_messenger.chat.api.v1.SendMessageResponse\"+\x82\xd3\xe4\x93\x02%:\x01*\" /api/v1/chats/{chat_id}/messages\x12\xc3\x01\n" +
+	"\fListMessages\x12C.github.com.ademaxweb.msa_messenger.chat.api.v1.ListMessagesRequest\x1aD.github.com.ademaxweb.msa_messenger.chat.api.v1.ListMessagesResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /api/v1/chats/{chat_id}/messages\x12\xa3\x01\n" +
 	"\x0eStreamMessages\x12E.github.com.ademaxweb.msa_messenger.chat.api.v1.StreamMessagesRequest\x1aF.github.com.ademaxweb.msa_messenger.chat.api.v1.StreamMessagesResponse\"\x000\x01B\x13Z\x11pkg/api/chat;chatb\x06proto3"
 
 var file_api_chat_v1_service_proto_goTypes = []any{

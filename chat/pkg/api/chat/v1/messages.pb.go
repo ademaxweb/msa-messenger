@@ -21,12 +21,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Модель чата
 type Chat struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	AvatarUrl     string                 `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Уникальный идентификатор чата
+	Id uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Название чата (для групповых чатов)
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Описание чата (для групповых чатов)
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// URL аватара чата
+	AvatarUrl     string `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -89,12 +94,17 @@ func (x *Chat) GetAvatarUrl() string {
 	return ""
 }
 
+// Модель сообщения в чате
 type Message struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ChatId        uint32                 `protobuf:"varint,2,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	UserId        uint32                 `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Text          string                 `protobuf:"bytes,4,opt,name=text,proto3" json:"text,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Уникальный идентификатор сообщения
+	Id uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Идентификатор чата, в котором отправлено сообщение
+	ChatId uint32 `protobuf:"varint,2,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	// Идентификатор пользователя, отправившего сообщение
+	UserId uint32 `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// Текст сообщения
+	Text          string `protobuf:"bytes,4,opt,name=text,proto3" json:"text,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -157,11 +167,15 @@ func (x *Message) GetText() string {
 	return ""
 }
 
+// Параметры пагинации для управления выводом списков
 type Pagination struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Limit         uint32                 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
-	Cursor        *uint32                `protobuf:"varint,2,opt,name=cursor,proto3,oneof" json:"cursor,omitempty"`
-	NextCursor    *uint32                `protobuf:"varint,3,opt,name=next_cursor,json=nextCursor,proto3,oneof" json:"next_cursor,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Максимальное количество элементов на странице
+	Limit uint32 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
+	// Текущая позиция курсора для пагинации (опционально)
+	Cursor *uint32 `protobuf:"varint,2,opt,name=cursor,proto3,oneof" json:"cursor,omitempty"`
+	// Позиция курсора для следующей страницы результатов (опционально)
+	NextCursor    *uint32 `protobuf:"varint,3,opt,name=next_cursor,json=nextCursor,proto3,oneof" json:"next_cursor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -217,9 +231,11 @@ func (x *Pagination) GetNextCursor() uint32 {
 	return 0
 }
 
+// Запрос на создание личного чата между двумя пользователями
 type CreateDirectChatRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ParticipantId uint32                 `protobuf:"varint,1,opt,name=participant_id,json=participantId,proto3" json:"participant_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор пользователя, с которым создается личный чат
+	ParticipantId uint32 `protobuf:"varint,1,opt,name=participant_id,json=participantId,proto3" json:"participant_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -261,9 +277,11 @@ func (x *CreateDirectChatRequest) GetParticipantId() uint32 {
 	return 0
 }
 
+// Ответ на запрос создания личного чата
 type CreateDirectChatResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        uint32                 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор созданного чата
+	ChatId        uint32 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -305,9 +323,11 @@ func (x *CreateDirectChatResponse) GetChatId() uint32 {
 	return 0
 }
 
+// Запрос на получение информации о чате
 type GetChatRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        uint32                 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор запрашиваемого чата
+	ChatId        uint32 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -349,9 +369,11 @@ func (x *GetChatRequest) GetChatId() uint32 {
 	return 0
 }
 
+// Ответ с информацией о чате
 type GetChatResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Chat          *Chat                  `protobuf:"bytes,1,opt,name=chat,proto3" json:"chat,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Объект чата с полной информацией
+	Chat          *Chat `protobuf:"bytes,1,opt,name=chat,proto3" json:"chat,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -393,10 +415,13 @@ func (x *GetChatResponse) GetChat() *Chat {
 	return nil
 }
 
+// Запрос на получение списка чатов пользователя
 type ListUserChatsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор пользователя, чьи чаты запрашиваются
+	UserId uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// Параметры пагинации для управления списком чатов
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -445,10 +470,13 @@ func (x *ListUserChatsRequest) GetPagination() *Pagination {
 	return nil
 }
 
+// Ответ со списком чатов пользователя
 type ListUserChatsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Chats         []*Chat                `protobuf:"bytes,1,rep,name=chats,proto3" json:"chats,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Список чатов, в которых участвует пользователь
+	Chats []*Chat `protobuf:"bytes,1,rep,name=chats,proto3" json:"chats,omitempty"`
+	// Информация о пагинации для навигации по результатам
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -497,10 +525,13 @@ func (x *ListUserChatsResponse) GetPagination() *Pagination {
 	return nil
 }
 
+// Запрос на получение списка участников чата
 type ListChatMembersRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        uint32                 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор чата, участники которого запрашиваются
+	ChatId uint32 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	// Параметры пагинации для управления списком участников
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -549,10 +580,13 @@ func (x *ListChatMembersRequest) GetPagination() *Pagination {
 	return nil
 }
 
+// Ответ со списком участников чата
 type ListChatMembersResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIds       []uint32               `protobuf:"varint,1,rep,packed,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Список идентификаторов пользователей-участников чата
+	UserIds []uint32 `protobuf:"varint,1,rep,packed,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
+	// Информация о пагинации для навигации по результатам
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -601,10 +635,13 @@ func (x *ListChatMembersResponse) GetPagination() *Pagination {
 	return nil
 }
 
+// Запрос на отправку сообщения в чат
 type SendMessageRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        uint32                 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	Text          string                 `protobuf:"bytes,2,opt,name=text,proto3" json:"text,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор чата, в который отправляется сообщение
+	ChatId uint32 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	// Текст отправляемого сообщения
+	Text          string `protobuf:"bytes,2,opt,name=text,proto3" json:"text,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -653,9 +690,11 @@ func (x *SendMessageRequest) GetText() string {
 	return ""
 }
 
+// Ответ на отправку сообщения
 type SendMessageResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Объект отправленного сообщения с присвоенным идентификатором
+	Message       *Message `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -697,10 +736,13 @@ func (x *SendMessageResponse) GetMessage() *Message {
 	return nil
 }
 
+// Запрос на получение истории сообщений чата
 type ListMessagesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        uint32                 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор чата, сообщения которого запрашиваются
+	ChatId uint32 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	// Параметры пагинации для управления историей сообщений
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -749,10 +791,13 @@ func (x *ListMessagesRequest) GetPagination() *Pagination {
 	return nil
 }
 
+// Ответ с историей сообщений чата
 type ListMessagesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Messages      []*Message             `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
-	Pagination    *Pagination            `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Список сообщений из запрашиваемого чата
+	Messages []*Message `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	// Информация о пагинации для навигации по истории
+	Pagination    *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -801,10 +846,13 @@ func (x *ListMessagesResponse) GetPagination() *Pagination {
 	return nil
 }
 
+// Запрос на потоковую передачу новых сообщений из чата (WebSocket/long-polling)
 type StreamMessagesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        uint32                 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	SinceUnixMs   *uint64                `protobuf:"varint,2,opt,name=since_unix_ms,json=sinceUnixMs,proto3,oneof" json:"since_unix_ms,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Идентификатор чата, из которого запрашиваются сообщения
+	ChatId uint32 `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	// Временная метка в миллисекундах для получения сообщений начиная с указанного времени (опционально)
+	SinceUnixMs   *uint64 `protobuf:"varint,2,opt,name=since_unix_ms,json=sinceUnixMs,proto3,oneof" json:"since_unix_ms,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -853,9 +901,11 @@ func (x *StreamMessagesRequest) GetSinceUnixMs() uint64 {
 	return 0
 }
 
+// Ответ в потоковой передаче сообщений
 type StreamMessagesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Новое сообщение, полученное в чате
+	Message       *Message `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

@@ -4,94 +4,136 @@ package github.com.ademaxweb.msa_messenger.chat.api.v1;
 
 option go_package = "pkg/api/chat;chat";
 
+// Модель чата
 message Chat {
+  // Уникальный идентификатор чата
   uint32 id = 1;
+  // Название чата (для групповых чатов)
   string name = 2;
+  // Описание чата (для групповых чатов)
   string description = 3;
+  // URL аватара чата
   string avatar_url = 4;
 }
 
+// Модель сообщения в чате
 message Message {
+  // Уникальный идентификатор сообщения
   uint32 id = 1;
+  // Идентификатор чата, в котором отправлено сообщение
   uint32 chat_id = 2;
+  // Идентификатор пользователя, отправившего сообщение
   uint32 user_id = 3;
+  // Текст сообщения
   string text = 4;
 }
 
+// Параметры пагинации для управления выводом списков
 message Pagination {
+  // Максимальное количество элементов на странице
   uint32 limit = 1;
+  // Текущая позиция курсора для пагинации (опционально)
   optional uint32 cursor = 2;
+  // Позиция курсора для следующей страницы результатов (опционально)
   optional uint32 next_cursor = 3;
 }
 
-
-
+// Запрос на создание личного чата между двумя пользователями
 message CreateDirectChatRequest {
+  // Идентификатор пользователя, с которым создается личный чат
   uint32 participant_id = 1;
 }
+
+// Ответ на запрос создания личного чата
 message CreateDirectChatResponse {
+  // Идентификатор созданного чата
   uint32 chat_id = 1;
 }
 
-
-
+// Запрос на получение информации о чате
 message GetChatRequest {
+  // Идентификатор запрашиваемого чата
   uint32 chat_id = 1;
 }
+
+// Ответ с информацией о чате
 message GetChatResponse {
+  // Объект чата с полной информацией
   Chat chat = 1;
 }
 
-
-
+// Запрос на получение списка чатов пользователя
 message ListUserChatsRequest {
+  // Идентификатор пользователя, чьи чаты запрашиваются
   uint32 user_id = 1;
+  // Параметры пагинации для управления списком чатов
   Pagination pagination = 2;
 }
+
+// Ответ со списком чатов пользователя
 message ListUserChatsResponse {
+  // Список чатов, в которых участвует пользователь
   repeated Chat chats = 1;
+  // Информация о пагинации для навигации по результатам
   Pagination pagination = 2;
 }
 
-
-
+// Запрос на получение списка участников чата
 message ListChatMembersRequest {
+  // Идентификатор чата, участники которого запрашиваются
   uint32 chat_id = 1;
+  // Параметры пагинации для управления списком участников
   Pagination pagination = 2;
 }
+
+// Ответ со списком участников чата
 message ListChatMembersResponse {
+  // Список идентификаторов пользователей-участников чата
   repeated uint32 user_ids = 1;
+  // Информация о пагинации для навигации по результатам
   Pagination pagination = 2;
 }
 
-
-
+// Запрос на отправку сообщения в чат
 message SendMessageRequest {
+  // Идентификатор чата, в который отправляется сообщение
   uint32 chat_id = 1;
+  // Текст отправляемого сообщения
   string text = 2;
 }
+
+// Ответ на отправку сообщения
 message SendMessageResponse {
+  // Объект отправленного сообщения с присвоенным идентификатором
   Message message = 1;
 }
 
-
-
+// Запрос на получение истории сообщений чата
 message ListMessagesRequest {
+  // Идентификатор чата, сообщения которого запрашиваются
   uint32 chat_id = 1;
+  // Параметры пагинации для управления историей сообщений
   Pagination pagination = 2;
-
 }
+
+// Ответ с историей сообщений чата
 message ListMessagesResponse {
+  // Список сообщений из запрашиваемого чата
   repeated Message messages = 1;
+  // Информация о пагинации для навигации по истории
   Pagination pagination = 2;
 }
 
-
-
+// Запрос на потоковую передачу новых сообщений из чата (WebSocket/long-polling)
 message StreamMessagesRequest {
+  // Идентификатор чата, из которого запрашиваются сообщения
   uint32 chat_id = 1;
+  // Временная метка в миллисекундах для получения сообщений начиная с указанного времени (опционально)
   optional uint64 since_unix_ms = 2;
 }
+
+// Ответ в потоковой передаче сообщений
 message StreamMessagesResponse {
+  // Новое сообщение, полученное в чате
   Message message = 1;
 }

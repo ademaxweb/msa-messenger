@@ -31,12 +31,20 @@ const (
 // ChatServiceClient is the client API for ChatService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// Сервис для управления чатами и сообщениями
 type ChatServiceClient interface {
+	// Создание личного чата между текущим пользователем и указанным участником
 	CreateDirectChat(ctx context.Context, in *CreateDirectChatRequest, opts ...grpc.CallOption) (*CreateDirectChatResponse, error)
+	// Получение информации о конкретном чате по его идентификатору
 	GetChat(ctx context.Context, in *GetChatRequest, opts ...grpc.CallOption) (*GetChatResponse, error)
+	// Получение списка всех чатов текущего пользователя с пагинацией
 	ListUserChats(ctx context.Context, in *ListUserChatsRequest, opts ...grpc.CallOption) (*ListUserChatsResponse, error)
+	// Получение списка участников указанного чата
 	ListChatMembers(ctx context.Context, in *ListChatMembersRequest, opts ...grpc.CallOption) (*ListChatMembersResponse, error)
+	// Отправка нового сообщения в указанный чат
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
+	// Получение истории сообщений из указанного чата с пагинацией
 	ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (*ListMessagesResponse, error)
 	StreamMessages(ctx context.Context, in *StreamMessagesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamMessagesResponse], error)
 }
@@ -131,12 +139,20 @@ type ChatService_StreamMessagesClient = grpc.ServerStreamingClient[StreamMessage
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
+//
+// Сервис для управления чатами и сообщениями
 type ChatServiceServer interface {
+	// Создание личного чата между текущим пользователем и указанным участником
 	CreateDirectChat(context.Context, *CreateDirectChatRequest) (*CreateDirectChatResponse, error)
+	// Получение информации о конкретном чате по его идентификатору
 	GetChat(context.Context, *GetChatRequest) (*GetChatResponse, error)
+	// Получение списка всех чатов текущего пользователя с пагинацией
 	ListUserChats(context.Context, *ListUserChatsRequest) (*ListUserChatsResponse, error)
+	// Получение списка участников указанного чата
 	ListChatMembers(context.Context, *ListChatMembersRequest) (*ListChatMembersResponse, error)
+	// Отправка нового сообщения в указанный чат
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
+	// Получение истории сообщений из указанного чата с пагинацией
 	ListMessages(context.Context, *ListMessagesRequest) (*ListMessagesResponse, error)
 	StreamMessages(*StreamMessagesRequest, grpc.ServerStreamingServer[StreamMessagesResponse]) error
 	mustEmbedUnimplementedChatServiceServer()
