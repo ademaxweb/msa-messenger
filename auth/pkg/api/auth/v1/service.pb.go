@@ -7,6 +7,7 @@
 package auth
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -24,11 +25,11 @@ var File_api_auth_v1_service_proto protoreflect.FileDescriptor
 
 const file_api_auth_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x19api/auth/v1/service.proto\x123github.com.ademaxweb.msa_messenger.auth.api.auth.v1\x1a\x1aapi/auth/v1/messages.proto2\xd5\x03\n" +
-	"\vAuthService\x12\x99\x01\n" +
-	"\bRegister\x12D.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterRequest\x1aE.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterResponse\"\x00\x12\x90\x01\n" +
-	"\x05Login\x12A.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginRequest\x1aB.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginResponse\"\x00\x12\x96\x01\n" +
-	"\aRefresh\x12C.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RefreshRequest\x1aD.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RefreshResponse\"\x00B\x13Z\x11pkg/api/auth;authb\x06proto3"
+	"\x19api/auth/v1/service.proto\x123github.com.ademaxweb.msa_messenger.auth.api.auth.v1\x1a\x1aapi/auth/v1/messages.proto\x1a\x1cgoogle/api/annotations.proto2\xb1\x04\n" +
+	"\vAuthService\x12\xb9\x01\n" +
+	"\bRegister\x12D.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterRequest\x1aE.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/register\x12\xad\x01\n" +
+	"\x05Login\x12A.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginRequest\x1aB.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/api/v1/auth/login\x12\xb5\x01\n" +
+	"\aRefresh\x12C.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RefreshRequest\x1aD.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RefreshResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v1/auth/refreshB\x13Z\x11pkg/api/auth;authb\x06proto3"
 
 var file_api_auth_v1_service_proto_goTypes = []any{
 	(*RegisterRequest)(nil),  // 0: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterRequest
