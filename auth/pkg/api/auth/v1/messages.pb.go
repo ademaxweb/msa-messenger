@@ -7,6 +7,7 @@
 package auth
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -76,52 +77,6 @@ func (x *Credentials) GetPassword() string {
 	return ""
 }
 
-// Запрос на регистрацию нового пользователя в системе
-type RegisterRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Учетные данные для создания нового аккаунта
-	Credentials   *Credentials `protobuf:"bytes,1,opt,name=credentials,proto3" json:"credentials,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RegisterRequest) Reset() {
-	*x = RegisterRequest{}
-	mi := &file_api_auth_v1_messages_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RegisterRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RegisterRequest) ProtoMessage() {}
-
-func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_auth_v1_messages_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
-func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_api_auth_v1_messages_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *RegisterRequest) GetCredentials() *Credentials {
-	if x != nil {
-		return x.Credentials
-	}
-	return nil
-}
-
 // Токены аутентификации, возвращаемые при успешном входе
 type Token struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -137,7 +92,7 @@ type Token struct {
 
 func (x *Token) Reset() {
 	*x = Token{}
-	mi := &file_api_auth_v1_messages_proto_msgTypes[2]
+	mi := &file_api_auth_v1_messages_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -149,7 +104,7 @@ func (x *Token) String() string {
 func (*Token) ProtoMessage() {}
 
 func (x *Token) ProtoReflect() protoreflect.Message {
-	mi := &file_api_auth_v1_messages_proto_msgTypes[2]
+	mi := &file_api_auth_v1_messages_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +117,7 @@ func (x *Token) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Token.ProtoReflect.Descriptor instead.
 func (*Token) Descriptor() ([]byte, []int) {
-	return file_api_auth_v1_messages_proto_rawDescGZIP(), []int{2}
+	return file_api_auth_v1_messages_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Token) GetAccessToken() string {
@@ -184,6 +139,52 @@ func (x *Token) GetUserId() uint32 {
 		return x.UserId
 	}
 	return 0
+}
+
+// Запрос на регистрацию нового пользователя в системе
+type RegisterRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Учетные данные для создания нового аккаунта
+	Credentials   *Credentials `protobuf:"bytes,1,opt,name=credentials,proto3" json:"credentials,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterRequest) Reset() {
+	*x = RegisterRequest{}
+	mi := &file_api_auth_v1_messages_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterRequest) ProtoMessage() {}
+
+func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_auth_v1_messages_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
+func (*RegisterRequest) Descriptor() ([]byte, []int) {
+	return file_api_auth_v1_messages_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *RegisterRequest) GetCredentials() *Credentials {
+	if x != nil {
+		return x.Credentials
+	}
+	return nil
 }
 
 // Ответ на успешную регистрацию пользователя
@@ -420,24 +421,27 @@ var File_api_auth_v1_messages_proto protoreflect.FileDescriptor
 
 const file_api_auth_v1_messages_proto_rawDesc = "" +
 	"\n" +
-	"\x1aapi/auth/v1/messages.proto\x123github.com.ademaxweb.msa_messenger.auth.api.auth.v1\"?\n" +
-	"\vCredentials\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"u\n" +
-	"\x0fRegisterRequest\x12b\n" +
-	"\vcredentials\x18\x01 \x01(\v2@.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.CredentialsR\vcredentials\"h\n" +
+	"\x1aapi/auth/v1/messages.proto\x123github.com.ademaxweb.msa_messenger.auth.api.auth.v1\x1a\x1bbuf/validate/validate.proto\"W\n" +
+	"\vCredentials\x12 \n" +
+	"\x05email\x18\x01 \x01(\tB\n" +
+	"\xbaH\a\xc8\x01\x01r\x02`\x01R\x05email\x12&\n" +
+	"\bpassword\x18\x02 \x01(\tB\n" +
+	"\xbaH\a\xc8\x01\x01r\x02\x10\bR\bpassword\"h\n" +
 	"\x05Token\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\rR\x06userId\"+\n" +
+	"\auser_id\x18\x03 \x01(\rR\x06userId\"}\n" +
+	"\x0fRegisterRequest\x12j\n" +
+	"\vcredentials\x18\x01 \x01(\v2@.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.CredentialsB\x06\xbaH\x03\xc8\x01\x01R\vcredentials\"+\n" +
 	"\x10RegisterResponse\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\"r\n" +
-	"\fLoginRequest\x12b\n" +
-	"\vcredentials\x18\x01 \x01(\v2@.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.CredentialsR\vcredentials\"a\n" +
+	"\auser_id\x18\x01 \x01(\rR\x06userId\"z\n" +
+	"\fLoginRequest\x12j\n" +
+	"\vcredentials\x18\x01 \x01(\v2@.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.CredentialsB\x06\xbaH\x03\xc8\x01\x01R\vcredentials\"a\n" +
 	"\rLoginResponse\x12P\n" +
-	"\x05token\x18\x01 \x01(\v2:.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.TokenR\x05token\"5\n" +
-	"\x0eRefreshRequest\x12#\n" +
-	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"c\n" +
+	"\x05token\x18\x01 \x01(\v2:.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.TokenR\x05token\"A\n" +
+	"\x0eRefreshRequest\x12/\n" +
+	"\rrefresh_token\x18\x01 \x01(\tB\n" +
+	"\xbaH\a\xc8\x01\x01r\x02\x10\x01R\frefreshToken\"c\n" +
 	"\x0fRefreshResponse\x12P\n" +
 	"\x05token\x18\x01 \x01(\v2:.github.com.ademaxweb.msa_messenger.auth.api.auth.v1.TokenR\x05tokenB\x13Z\x11pkg/api/auth;authb\x06proto3"
 
@@ -456,8 +460,8 @@ func file_api_auth_v1_messages_proto_rawDescGZIP() []byte {
 var file_api_auth_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_api_auth_v1_messages_proto_goTypes = []any{
 	(*Credentials)(nil),      // 0: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Credentials
-	(*RegisterRequest)(nil),  // 1: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterRequest
-	(*Token)(nil),            // 2: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Token
+	(*Token)(nil),            // 1: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Token
+	(*RegisterRequest)(nil),  // 2: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterRequest
 	(*RegisterResponse)(nil), // 3: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterResponse
 	(*LoginRequest)(nil),     // 4: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginRequest
 	(*LoginResponse)(nil),    // 5: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginResponse
@@ -467,8 +471,8 @@ var file_api_auth_v1_messages_proto_goTypes = []any{
 var file_api_auth_v1_messages_proto_depIdxs = []int32{
 	0, // 0: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RegisterRequest.credentials:type_name -> github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Credentials
 	0, // 1: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginRequest.credentials:type_name -> github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Credentials
-	2, // 2: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginResponse.token:type_name -> github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Token
-	2, // 3: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RefreshResponse.token:type_name -> github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Token
+	1, // 2: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.LoginResponse.token:type_name -> github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Token
+	1, // 3: github.com.ademaxweb.msa_messenger.auth.api.auth.v1.RefreshResponse.token:type_name -> github.com.ademaxweb.msa_messenger.auth.api.auth.v1.Token
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
