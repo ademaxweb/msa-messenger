@@ -4,78 +4,111 @@ package github.com.ademaxweb.msa_messenger.social.api.social.v1;
 
 option go_package = "pkg/api/social;social";
 
+// Статус заявки в друзья
 enum FriendRequestStatus {
+  // Заявка ожидает рассмотрения получателем
   STATUS_PENDING = 0;
+  // Заявка была принята получателем, пользователи стали друзьями
   STATUS_ACCEPTED = 1;
+  // Заявка была отклонена получателем
   STATUS_DECLINED = 2;
 
   reserved 3 to max;
 }
 
-message Pagination {
+// Курсорная пагинация
+message CursorPagination {
+  // Максимальное количество элементов на странице
   uint32 limit = 1;
+  // Текущая позиция курсора (опционально)
   optional uint32 cursor = 2;
+  // Следующая позиция курсора для получения следующей страницы (опционально)
   optional uint32 next_cursor = 3;
 }
 
+// Заявка в друзья
 message FriendRequest {
+  // Уникальный идентификатор заявки
   uint32 id = 1;
+  // Идентификатор пользователя, отправившего заявку
   uint32 sender_id = 2;
+  // Идентификатор пользователя, получившего заявку
   uint32 receiver_id = 3;
+  // Текущий статус заявки
   FriendRequestStatus status = 4;
 }
 
-
-
+// Запрос на отправку заявки в друзья
 message SendFriendRequestRequest {
+  // Идентификатор пользователя, которому отправляется заявка в друзья
   uint32 user_id = 1;
 }
+
+// Ответ на отправку заявки в друзья
 message SendFriendRequestResponse {
+  // Созданная заявка в друзья
   FriendRequest request = 1;
 }
 
-
-
+// Запрос на получение списка заявок в друзья
 message ListRequestsRequest {
+  // Идентификатор пользователя, для которого запрашиваются заявки
   uint32 user_id = 1;
 }
+
+// Ответ с списком заявок в друзья
 message ListRequestsResponse {
+  // Список заявок в друзья
   repeated FriendRequest requests = 1;
-  Pagination pagination = 2;
+  // Пагинация
+  CursorPagination pagination = 2;
 }
 
-
-
+// Запрос на принятие заявки в друзья
 message AcceptFriendRequestRequest {
+  // Идентификатор заявки, которую необходимо принять
   uint32 request_id = 1;
 }
+
+// Ответ на принятие заявки в друзья
 message AcceptFriendRequestResponse {
+  // Обновленная заявка
   FriendRequest request = 1;
 }
 
-
-
+// Запрос на отклонение заявки в друзья
 message DeclineFriendRequestRequest {
+  // Идентификатор заявки, которую необходимо отклонить
   uint32 request_id = 1;
 }
+
+// Ответ на отклонение заявки в друзья
 message DeclineFriendRequestResponse {
+  // Обновленная заявка
   FriendRequest request = 1;
 }
 
-
-
+// Запрос на удаление пользователя из списка друзей
 message RemoveFriendRequest {
+  // Идентификатор пользователя, которого необходимо удалить из друзей
   uint32 user_id = 1;
 }
+
+// Ответ на удаление пользователя из друзей
 message RemoveFriendResponse {}
 
-
-
+// Запрос на получение списка друзей пользователя
 message ListFriendsRequest {
+  // Идентификатор пользователя, список друзей которого запрашивается
   uint32 user_id = 1;
-  Pagination pagination = 2;
+  // Пагинация
+  CursorPagination pagination = 2;
 }
+
+// Ответ со списком друзей пользователя
 message ListFriendsResponse {
+  // Список идентификаторов пользователей, являющихся друзьями
   repeated uint32 friend_user_ids = 1;
-  Pagination pagination = 2;
+  // Пагинация
+  CursorPagination pagination = 2;
 }

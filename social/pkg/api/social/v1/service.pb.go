@@ -7,6 +7,7 @@
 package social
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -24,14 +25,15 @@ var File_api_social_v1_service_proto protoreflect.FileDescriptor
 
 const file_api_social_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1bapi/social/v1/service.proto\x127github.com.ademaxweb.msa_messenger.social.api.social.v1\x1a\x1capi/social/v1/messages.proto2\xe8\b\n" +
-	"\rSocialService\x12\xbc\x01\n" +
-	"\x11SendFriendRequest\x12Q.github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestRequest\x1aR.github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestResponse\"\x00\x12\xad\x01\n" +
-	"\fListRequests\x12L.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsRequest\x1aM.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsResponse\"\x00\x12\xc2\x01\n" +
-	"\x13AcceptFriendRequest\x12S.github.com.ademaxweb.msa_messenger.social.api.social.v1.AcceptFriendRequestRequest\x1aT.github.com.ademaxweb.msa_messenger.social.api.social.v1.AcceptFriendRequestResponse\"\x00\x12\xc5\x01\n" +
-	"\x14DeclineFriendRequest\x12T.github.com.ademaxweb.msa_messenger.social.api.social.v1.DeclineFriendRequestRequest\x1aU.github.com.ademaxweb.msa_messenger.social.api.social.v1.DeclineFriendRequestResponse\"\x00\x12\xad\x01\n" +
-	"\fRemoveFriend\x12L.github.com.ademaxweb.msa_messenger.social.api.social.v1.RemoveFriendRequest\x1aM.github.com.ademaxweb.msa_messenger.social.api.social.v1.RemoveFriendResponse\"\x00\x12\xaa\x01\n" +
-	"\vListFriends\x12K.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsRequest\x1aL.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsResponse\"\x00B\x17Z\x15pkg/api/social;socialb\x06proto3"
+	"\x1bapi/social/v1/service.proto\x127github.com.ademaxweb.msa_messenger.social.api.social.v1\x1a\x1capi/social/v1/messages.proto\x1a\x1cgoogle/api/annotations.proto2\xcc\n" +
+	"\n" +
+	"\rSocialService\x12\xdf\x01\n" +
+	"\x11SendFriendRequest\x12Q.github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestRequest\x1aR.github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/v1/friends/requests\x12\xcd\x01\n" +
+	"\fListRequests\x12L.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsRequest\x1aM.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListRequestsResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/friends/requests\x12\xf6\x01\n" +
+	"\x13AcceptFriendRequest\x12S.github.com.ademaxweb.msa_messenger.social.api.social.v1.AcceptFriendRequestRequest\x1aT.github.com.ademaxweb.msa_messenger.social.api.social.v1.AcceptFriendRequestResponse\"4\x82\xd3\xe4\x93\x02.\",/api/v1/friends/requests/{request_id}/accept\x12\xfa\x01\n" +
+	"\x14DeclineFriendRequest\x12T.github.com.ademaxweb.msa_messenger.social.api.social.v1.DeclineFriendRequestRequest\x1aU.github.com.ademaxweb.msa_messenger.social.api.social.v1.DeclineFriendRequestResponse\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/friends/requests/{request_id}/decline\x12\xce\x01\n" +
+	"\fRemoveFriend\x12L.github.com.ademaxweb.msa_messenger.social.api.social.v1.RemoveFriendRequest\x1aM.github.com.ademaxweb.msa_messenger.social.api.social.v1.RemoveFriendResponse\"!\x82\xd3\xe4\x93\x02\x1b*\x19/api/v1/friends/{user_id}\x12\xc1\x01\n" +
+	"\vListFriends\x12K.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsRequest\x1aL.github.com.ademaxweb.msa_messenger.social.api.social.v1.ListFriendsResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/api/v1/friendsB\x17Z\x15pkg/api/social;socialb\x06proto3"
 
 var file_api_social_v1_service_proto_goTypes = []any{
 	(*SendFriendRequestRequest)(nil),     // 0: github.com.ademaxweb.msa_messenger.social.api.social.v1.SendFriendRequestRequest

@@ -21,11 +21,15 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Статус заявки в друзья
 type FriendRequestStatus int32
 
 const (
-	FriendRequestStatus_STATUS_PENDING  FriendRequestStatus = 0
+	// Ожидание
+	FriendRequestStatus_STATUS_PENDING FriendRequestStatus = 0
+	// Принята
 	FriendRequestStatus_STATUS_ACCEPTED FriendRequestStatus = 1
+	// Отклонена
 	FriendRequestStatus_STATUS_DECLINED FriendRequestStatus = 2
 )
 
@@ -70,6 +74,7 @@ func (FriendRequestStatus) EnumDescriptor() ([]byte, []int) {
 	return file_api_social_v1_messages_proto_rawDescGZIP(), []int{0}
 }
 
+// Курсорная пагинация
 type Pagination struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Limit         uint32                 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
@@ -130,12 +135,17 @@ func (x *Pagination) GetNextCursor() uint32 {
 	return 0
 }
 
+// Заявка в друзья
 type FriendRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	SenderId      uint32                 `protobuf:"varint,2,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
-	ReceiverId    uint32                 `protobuf:"varint,3,opt,name=receiver_id,json=receiverId,proto3" json:"receiver_id,omitempty"`
-	Status        FriendRequestStatus    `protobuf:"varint,4,opt,name=status,proto3,enum=github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatus" json:"status,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID заявки
+	Id uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID отправителя
+	SenderId uint32 `protobuf:"varint,2,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
+	// ID получателя
+	ReceiverId uint32 `protobuf:"varint,3,opt,name=receiver_id,json=receiverId,proto3" json:"receiver_id,omitempty"`
+	// Статус заявки
+	Status        FriendRequestStatus `protobuf:"varint,4,opt,name=status,proto3,enum=github.com.ademaxweb.msa_messenger.social.api.social.v1.FriendRequestStatus" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -198,9 +208,11 @@ func (x *FriendRequest) GetStatus() FriendRequestStatus {
 	return FriendRequestStatus_STATUS_PENDING
 }
 
+// [Запрос] Отправка заявки в друзья
 type SendFriendRequestRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID пользователя, которому отправляется заявка
+	UserId        uint32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -242,6 +254,7 @@ func (x *SendFriendRequestRequest) GetUserId() uint32 {
 	return 0
 }
 
+// [Ответ] Отправка заявки в друзья
 type SendFriendRequestResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Request       *FriendRequest         `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
@@ -286,6 +299,7 @@ func (x *SendFriendRequestResponse) GetRequest() *FriendRequest {
 	return nil
 }
 
+// [Запрос] Отображение списка заявок в друзья
 type ListRequestsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -330,6 +344,7 @@ func (x *ListRequestsRequest) GetUserId() uint32 {
 	return 0
 }
 
+// [Ответ] Отображение списка заявок в друзья
 type ListRequestsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Requests      []*FriendRequest       `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
@@ -382,6 +397,7 @@ func (x *ListRequestsResponse) GetPagination() *Pagination {
 	return nil
 }
 
+// [Запрос] Принятие заявки в друзья
 type AcceptFriendRequestRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestId     uint32                 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
@@ -426,6 +442,7 @@ func (x *AcceptFriendRequestRequest) GetRequestId() uint32 {
 	return 0
 }
 
+// [Ответ] Принятие заявки в друзья
 type AcceptFriendRequestResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Request       *FriendRequest         `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
@@ -470,6 +487,7 @@ func (x *AcceptFriendRequestResponse) GetRequest() *FriendRequest {
 	return nil
 }
 
+// [Запрос] Отклонение заявки в друзья
 type DeclineFriendRequestRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestId     uint32                 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
@@ -514,6 +532,7 @@ func (x *DeclineFriendRequestRequest) GetRequestId() uint32 {
 	return 0
 }
 
+// [Ответ] Отклонение заявки в друзья
 type DeclineFriendRequestResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Request       *FriendRequest         `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
@@ -558,6 +577,7 @@ func (x *DeclineFriendRequestResponse) GetRequest() *FriendRequest {
 	return nil
 }
 
+// [Запрос] Удаление пользователя из друзей
 type RemoveFriendRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -602,6 +622,7 @@ func (x *RemoveFriendRequest) GetUserId() uint32 {
 	return 0
 }
 
+// [Ответ] Удаление пользователя из друзей
 type RemoveFriendResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -638,6 +659,7 @@ func (*RemoveFriendResponse) Descriptor() ([]byte, []int) {
 	return file_api_social_v1_messages_proto_rawDescGZIP(), []int{11}
 }
 
+// [Запрос] Отображение списка друзей
 type ListFriendsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -690,6 +712,7 @@ func (x *ListFriendsRequest) GetPagination() *Pagination {
 	return nil
 }
 
+// [Ответ] Отображение списка друзей
 type ListFriendsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FriendUserIds []uint32               `protobuf:"varint,1,rep,packed,name=friend_user_ids,json=friendUserIds,proto3" json:"friend_user_ids,omitempty"`

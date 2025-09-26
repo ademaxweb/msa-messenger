@@ -31,11 +31,17 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SocialServiceClient interface {
+	// Отправление запроса в друзья
 	SendFriendRequest(ctx context.Context, in *SendFriendRequestRequest, opts ...grpc.CallOption) (*SendFriendRequestResponse, error)
+	// Отображение запросов в друзья
 	ListRequests(ctx context.Context, in *ListRequestsRequest, opts ...grpc.CallOption) (*ListRequestsResponse, error)
+	// Принятие запроса в друзья
 	AcceptFriendRequest(ctx context.Context, in *AcceptFriendRequestRequest, opts ...grpc.CallOption) (*AcceptFriendRequestResponse, error)
+	// Отклонение запроса в друзья
 	DeclineFriendRequest(ctx context.Context, in *DeclineFriendRequestRequest, opts ...grpc.CallOption) (*DeclineFriendRequestResponse, error)
+	// Удаление из друзей
 	RemoveFriend(ctx context.Context, in *RemoveFriendRequest, opts ...grpc.CallOption) (*RemoveFriendResponse, error)
+	// Отображение списка друзей
 	ListFriends(ctx context.Context, in *ListFriendsRequest, opts ...grpc.CallOption) (*ListFriendsResponse, error)
 }
 
@@ -111,11 +117,17 @@ func (c *socialServiceClient) ListFriends(ctx context.Context, in *ListFriendsRe
 // All implementations must embed UnimplementedSocialServiceServer
 // for forward compatibility.
 type SocialServiceServer interface {
+	// Отправление запроса в друзья
 	SendFriendRequest(context.Context, *SendFriendRequestRequest) (*SendFriendRequestResponse, error)
+	// Отображение запросов в друзья
 	ListRequests(context.Context, *ListRequestsRequest) (*ListRequestsResponse, error)
+	// Принятие запроса в друзья
 	AcceptFriendRequest(context.Context, *AcceptFriendRequestRequest) (*AcceptFriendRequestResponse, error)
+	// Отклонение запроса в друзья
 	DeclineFriendRequest(context.Context, *DeclineFriendRequestRequest) (*DeclineFriendRequestResponse, error)
+	// Удаление из друзей
 	RemoveFriend(context.Context, *RemoveFriendRequest) (*RemoveFriendResponse, error)
+	// Отображение списка друзей
 	ListFriends(context.Context, *ListFriendsRequest) (*ListFriendsResponse, error)
 	mustEmbedUnimplementedSocialServiceServer()
 }

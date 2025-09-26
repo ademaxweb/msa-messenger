@@ -5,15 +5,52 @@ package github.com.ademaxweb.msa_messenger.social.api.social.v1;
 option go_package = "pkg/api/social;social";
 
 import "api/social/v1/messages.proto";
+import "google/api/annotations.proto";
 
 
 
 service SocialService {
-  rpc SendFriendRequest(SendFriendRequestRequest) returns (SendFriendRequestResponse) {}
-  rpc ListRequests(ListRequestsRequest) returns (ListRequestsResponse) {}
-  rpc AcceptFriendRequest(AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse) {}
-  rpc DeclineFriendRequest(DeclineFriendRequestRequest) returns (DeclineFriendRequestResponse) {}
-  rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse) {}
-  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse) {}
+  // Отправление запроса в друзья
+  rpc SendFriendRequest(SendFriendRequestRequest) returns (SendFriendRequestResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/friends/requests"
+      body: "*"
+    };
+  }
+
+  // Отображение запросов в друзья
+  rpc ListRequests(ListRequestsRequest) returns (ListRequestsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/friends/requests"
+    };
+  }
+
+  // Принятие запроса в друзья
+  rpc AcceptFriendRequest(AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/friends/requests/{request_id}/accept"
+    };
+  }
+
+  // Отклонение запроса в друзья
+  rpc DeclineFriendRequest(DeclineFriendRequestRequest) returns (DeclineFriendRequestResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/friends/requests/{request_id}/decline"
+    };
+  }
+
+  // Удаление из друзей
+  rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/friends/{user_id}"
+    };
+  }
+
+  // Отображение списка друзей
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/friends"
+    };
+  }
 }
 
