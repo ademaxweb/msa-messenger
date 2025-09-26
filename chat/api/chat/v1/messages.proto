@@ -4,6 +4,8 @@ package github.com.ademaxweb.msa_messenger.chat.api.v1;
 
 option go_package = "pkg/api/chat;chat";
 
+import "buf/validate/validate.proto";
+
 // Модель чата
 message Chat {
   // Уникальный идентификатор чата
@@ -41,7 +43,9 @@ message Pagination {
 // Запрос на создание личного чата между двумя пользователями
 message CreateDirectChatRequest {
   // Идентификатор пользователя, с которым создается личный чат
-  uint32 participant_id = 1;
+  uint32 participant_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ на запрос создания личного чата
@@ -53,7 +57,9 @@ message CreateDirectChatResponse {
 // Запрос на получение информации о чате
 message GetChatRequest {
   // Идентификатор запрашиваемого чата
-  uint32 chat_id = 1;
+  uint32 chat_id = 1 [
+    (buf.validate.field).required = true
+  ];
 }
 
 // Ответ с информацией о чате
@@ -65,7 +71,9 @@ message GetChatResponse {
 // Запрос на получение списка чатов пользователя
 message ListUserChatsRequest {
   // Идентификатор пользователя, чьи чаты запрашиваются
-  uint32 user_id = 1;
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
   // Параметры пагинации для управления списком чатов
   Pagination pagination = 2;
 }
@@ -81,7 +89,9 @@ message ListUserChatsResponse {
 // Запрос на получение списка участников чата
 message ListChatMembersRequest {
   // Идентификатор чата, участники которого запрашиваются
-  uint32 chat_id = 1;
+  uint32 chat_id = 1 [
+    (buf.validate.field).required = true
+  ];
   // Параметры пагинации для управления списком участников
   Pagination pagination = 2;
 }
@@ -97,9 +107,14 @@ message ListChatMembersResponse {
 // Запрос на отправку сообщения в чат
 message SendMessageRequest {
   // Идентификатор чата, в который отправляется сообщение
-  uint32 chat_id = 1;
+  uint32 chat_id = 1 [
+    (buf.validate.field).required = true
+  ];
   // Текст отправляемого сообщения
-  string text = 2;
+  string text = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 1
+  ];
 }
 
 // Ответ на отправку сообщения
@@ -111,7 +126,9 @@ message SendMessageResponse {
 // Запрос на получение истории сообщений чата
 message ListMessagesRequest {
   // Идентификатор чата, сообщения которого запрашиваются
-  uint32 chat_id = 1;
+  uint32 chat_id = 1 [
+    (buf.validate.field).required = true
+  ];
   // Параметры пагинации для управления историей сообщений
   Pagination pagination = 2;
 }
@@ -124,10 +141,12 @@ message ListMessagesResponse {
   Pagination pagination = 2;
 }
 
-// Запрос на потоковую передачу новых сообщений из чата (WebSocket/long-polling)
+// Запрос на потоковую передачу новых сообщений из чата
 message StreamMessagesRequest {
   // Идентификатор чата, из которого запрашиваются сообщения
-  uint32 chat_id = 1;
+  uint32 chat_id = 1 [
+    (buf.validate.field).required = true
+  ];
   // Временная метка в миллисекундах для получения сообщений начиная с указанного времени (опционально)
   optional uint64 since_unix_ms = 2;
 }

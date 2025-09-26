@@ -7,6 +7,7 @@
 package chat
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -846,7 +847,7 @@ func (x *ListMessagesResponse) GetPagination() *Pagination {
 	return nil
 }
 
-// Запрос на потоковую передачу новых сообщений из чата (WebSocket/long-polling)
+// Запрос на потоковую передачу новых сообщений из чата
 type StreamMessagesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Идентификатор чата, из которого запрашиваются сообщения
@@ -951,7 +952,7 @@ var File_api_chat_v1_messages_proto protoreflect.FileDescriptor
 
 const file_api_chat_v1_messages_proto_rawDesc = "" +
 	"\n" +
-	"\x1aapi/chat/v1/messages.proto\x12.github.com.ademaxweb.msa_messenger.chat.api.v1\"k\n" +
+	"\x1aapi/chat/v1/messages.proto\x12.github.com.ademaxweb.msa_messenger.chat.api.v1\x1a\x1bbuf/validate/validate.proto\"k\n" +
 	"\x04Chat\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -970,17 +971,17 @@ const file_api_chat_v1_messages_proto_rawDesc = "" +
 	"\vnext_cursor\x18\x03 \x01(\rH\x01R\n" +
 	"nextCursor\x88\x01\x01B\t\n" +
 	"\a_cursorB\x0e\n" +
-	"\f_next_cursor\"@\n" +
-	"\x17CreateDirectChatRequest\x12%\n" +
-	"\x0eparticipant_id\x18\x01 \x01(\rR\rparticipantId\"3\n" +
+	"\f_next_cursor\"H\n" +
+	"\x17CreateDirectChatRequest\x12-\n" +
+	"\x0eparticipant_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\rparticipantId\"3\n" +
 	"\x18CreateDirectChatResponse\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\rR\x06chatId\")\n" +
-	"\x0eGetChatRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\rR\x06chatId\"[\n" +
+	"\achat_id\x18\x01 \x01(\rR\x06chatId\"1\n" +
+	"\x0eGetChatRequest\x12\x1f\n" +
+	"\achat_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06chatId\"[\n" +
 	"\x0fGetChatResponse\x12H\n" +
-	"\x04chat\x18\x01 \x01(\v24.github.com.ademaxweb.msa_messenger.chat.api.v1.ChatR\x04chat\"\x8b\x01\n" +
-	"\x14ListUserChatsRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\x12Z\n" +
+	"\x04chat\x18\x01 \x01(\v24.github.com.ademaxweb.msa_messenger.chat.api.v1.ChatR\x04chat\"\x93\x01\n" +
+	"\x14ListUserChatsRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\x12Z\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2:.github.com.ademaxweb.msa_messenger.chat.api.v1.PaginationR\n" +
 	"pagination\"\xbf\x01\n" +
@@ -988,9 +989,9 @@ const file_api_chat_v1_messages_proto_rawDesc = "" +
 	"\x05chats\x18\x01 \x03(\v24.github.com.ademaxweb.msa_messenger.chat.api.v1.ChatR\x05chats\x12Z\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2:.github.com.ademaxweb.msa_messenger.chat.api.v1.PaginationR\n" +
-	"pagination\"\x8d\x01\n" +
-	"\x16ListChatMembersRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\rR\x06chatId\x12Z\n" +
+	"pagination\"\x95\x01\n" +
+	"\x16ListChatMembersRequest\x12\x1f\n" +
+	"\achat_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06chatId\x12Z\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2:.github.com.ademaxweb.msa_messenger.chat.api.v1.PaginationR\n" +
 	"pagination\"\x90\x01\n" +
@@ -998,14 +999,15 @@ const file_api_chat_v1_messages_proto_rawDesc = "" +
 	"\buser_ids\x18\x01 \x03(\rR\auserIds\x12Z\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2:.github.com.ademaxweb.msa_messenger.chat.api.v1.PaginationR\n" +
-	"pagination\"A\n" +
-	"\x12SendMessageRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\rR\x06chatId\x12\x12\n" +
-	"\x04text\x18\x02 \x01(\tR\x04text\"h\n" +
+	"pagination\"U\n" +
+	"\x12SendMessageRequest\x12\x1f\n" +
+	"\achat_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06chatId\x12\x1e\n" +
+	"\x04text\x18\x02 \x01(\tB\n" +
+	"\xbaH\a\xc8\x01\x01r\x02\x10\x01R\x04text\"h\n" +
 	"\x13SendMessageResponse\x12Q\n" +
-	"\amessage\x18\x01 \x01(\v27.github.com.ademaxweb.msa_messenger.chat.api.v1.MessageR\amessage\"\x8a\x01\n" +
-	"\x13ListMessagesRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\rR\x06chatId\x12Z\n" +
+	"\amessage\x18\x01 \x01(\v27.github.com.ademaxweb.msa_messenger.chat.api.v1.MessageR\amessage\"\x92\x01\n" +
+	"\x13ListMessagesRequest\x12\x1f\n" +
+	"\achat_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06chatId\x12Z\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2:.github.com.ademaxweb.msa_messenger.chat.api.v1.PaginationR\n" +
 	"pagination\"\xc7\x01\n" +
@@ -1013,9 +1015,9 @@ const file_api_chat_v1_messages_proto_rawDesc = "" +
 	"\bmessages\x18\x01 \x03(\v27.github.com.ademaxweb.msa_messenger.chat.api.v1.MessageR\bmessages\x12Z\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2:.github.com.ademaxweb.msa_messenger.chat.api.v1.PaginationR\n" +
-	"pagination\"k\n" +
-	"\x15StreamMessagesRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\rR\x06chatId\x12'\n" +
+	"pagination\"s\n" +
+	"\x15StreamMessagesRequest\x12\x1f\n" +
+	"\achat_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06chatId\x12'\n" +
 	"\rsince_unix_ms\x18\x02 \x01(\x04H\x00R\vsinceUnixMs\x88\x01\x01B\x10\n" +
 	"\x0e_since_unix_ms\"k\n" +
 	"\x16StreamMessagesResponse\x12Q\n" +
