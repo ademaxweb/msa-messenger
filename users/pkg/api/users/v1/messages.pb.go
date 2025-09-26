@@ -7,6 +7,7 @@
 package users
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -694,7 +695,7 @@ var File_api_users_v1_messages_proto protoreflect.FileDescriptor
 
 const file_api_users_v1_messages_proto_rawDesc = "" +
 	"\n" +
-	"\x1bapi/users/v1/messages.proto\x125github.com.ademaxweb.msa_messenger.users.api.users.v1\"s\n" +
+	"\x1bapi/users/v1/messages.proto\x125github.com.ademaxweb.msa_messenger.users.api.users.v1\x1a\x1bbuf/validate/validate.proto\"s\n" +
 	"\vUserProfile\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x10\n" +
@@ -708,20 +709,20 @@ const file_api_users_v1_messages_proto_rawDesc = "" +
 	"\vnext_cursor\x18\x03 \x01(\rH\x01R\n" +
 	"nextCursor\x88\x01\x01B\t\n" +
 	"\a_cursorB\x0e\n" +
-	"\f_next_cursor\"\x9d\x01\n" +
+	"\f_next_cursor\"\xab\x01\n" +
 	"\x14CreateProfileRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x1a\n" +
-	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x15\n" +
+	"\auser_id\x18\x01 \x01(\rR\x06userId\x12(\n" +
+	"\bnickname\x18\x02 \x01(\tB\f\xbaH\t\xc8\x01\x01r\x04\x10\x05\x18\x14R\bnickname\x12\x15\n" +
 	"\x03bio\x18\x03 \x01(\tH\x00R\x03bio\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"avatar_url\x18\x04 \x01(\tH\x01R\tavatarUrl\x88\x01\x01B\x06\n" +
 	"\x04_bioB\r\n" +
 	"\v_avatar_url\"~\n" +
 	"\x15CreateProfileResponse\x12e\n" +
-	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"\xaf\x01\n" +
-	"\x14UpdateProfileRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x1f\n" +
-	"\bnickname\x18\x02 \x01(\tH\x00R\bnickname\x88\x01\x01\x12\x15\n" +
+	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"\xc2\x01\n" +
+	"\x14UpdateProfileRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\x12*\n" +
+	"\bnickname\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x05\x18\x14H\x00R\bnickname\x88\x01\x01\x12\x15\n" +
 	"\x03bio\x18\x03 \x01(\tH\x01R\x03bio\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"avatar_url\x18\x04 \x01(\tH\x02R\tavatarUrl\x88\x01\x01B\v\n" +
@@ -729,17 +730,18 @@ const file_api_users_v1_messages_proto_rawDesc = "" +
 	"\x04_bioB\r\n" +
 	"\v_avatar_url\"~\n" +
 	"\x15UpdateProfileResponse\x12e\n" +
-	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"0\n" +
-	"\x15GetProfileByIDRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\"\x7f\n" +
+	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"8\n" +
+	"\x15GetProfileByIDRequest\x12\x1f\n" +
+	"\auser_id\x18\x01 \x01(\rB\x06\xbaH\x03\xc8\x01\x01R\x06userId\"\x7f\n" +
 	"\x16GetProfileByIDResponse\x12e\n" +
-	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"9\n" +
-	"\x1bGetProfileByNicknameRequest\x12\x1a\n" +
-	"\bnickname\x18\x01 \x01(\tR\bnickname\"\x85\x01\n" +
+	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"G\n" +
+	"\x1bGetProfileByNicknameRequest\x12(\n" +
+	"\bnickname\x18\x01 \x01(\tB\f\xbaH\t\xc8\x01\x01r\x04\x10\x05\x18\x14R\bnickname\"\x85\x01\n" +
 	"\x1cGetProfileByNicknameResponse\x12e\n" +
-	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"\x99\x01\n" +
-	"\x1eSearchProfileByNicknameRequest\x12\x14\n" +
-	"\x05query\x18\x01 \x01(\tR\x05query\x12a\n" +
+	"\fuser_profile\x18\x01 \x01(\v2B.github.com.ademaxweb.msa_messenger.users.api.users.v1.UserProfileR\vuserProfile\"\xa5\x01\n" +
+	"\x1eSearchProfileByNicknameRequest\x12 \n" +
+	"\x05query\x18\x01 \x01(\tB\n" +
+	"\xbaH\a\xc8\x01\x01r\x02\x10\x03R\x05query\x12a\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2A.github.com.ademaxweb.msa_messenger.users.api.users.v1.PaginationR\n" +
 	"pagination\"\xe2\x01\n" +
