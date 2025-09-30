@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.users.api.users.v1;
+
+option go_package = "pkg/api/users;users";
+
+import "buf/validate/validate.proto";
+
+// Модель профиля пользователя системы
+message UserProfile {
+  // Уникальный идентификатор пользователя в системе
+  uint32 user_id = 1;
+  // Отображаемое имя пользователя (никнейм)
+  string nickname = 2;
+  // Краткое описание пользователя, статус или информация "О себе"
+  string bio = 3;
+  // URL аватара пользователя
+  string avatar_url = 4;
+}
+
+// Параметры пагинации для управления выводом списков
+message Pagination {
+  // Максимальное количество элементов на странице
+  uint32 limit = 1;
+  // Текущая позиция курсора для пагинации (опционально)
+  optional uint32 cursor = 2;
+  // Позиция курсора для следующей страницы результатов (опционально)
+  optional uint32 next_cursor = 3;
+}
+
+// Запрос на создание нового профиля пользователя
+message CreateProfileRequest {
+  // Уникальный идентификатор пользователя
+  uint32 user_id = 1;
+  // Отображаемое имя пользователя (обязательное поле)
+  string nickname = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string = {
+      min_len: 5,
+      max_len: 20
+    }
+  ];
+  // Краткое описание пользователя (опционально)
+  optional string bio = 3;
+  // URL аватара пользователя (опционально)
+  optional string avatar_url = 4;
+}
+
+// Ответ на запрос создания профиля пользователя
+message CreateProfileResponse {
+  // Созданный профиль пользователя
+  UserProfile user_profile = 1;
+}
+
+// Запрос на обновление существующего профиля пользователя
+message UpdateProfileRequest {
+  // Уникальный идентификатор обновляемого пользователя
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
+  // Новое отображаемое имя пользователя (опционально)
+  optional string nickname = 2 [
+    (buf.validate.field).string = {
+      min_len: 5,
+      max_len: 20
+    }
+  ];
+  // Новое описание пользователя (опционально)
+  optional string bio = 3;
+  // Новый URL аватара пользователя (опционально)
+  optional string avatar_url = 4;
+}
+
+// Ответ на запрос обновления профиля пользователя
+message UpdateProfileResponse {
+  // Обновленный профиль пользователя
+  UserProfile user_profile = 1;
+}
+
+// Запрос на получение профиля пользователя по идентификатору
+message GetProfileByIDRequest {
+  // Уникальный идентификатор искомого пользователя
+  uint32 user_id = 1 [
+    (buf.validate.field).required = true
+  ];
+}
+
+// Ответ на запрос получения профиля по идентификатору
+message GetProfileByIDResponse {
+  // Найденный профиль пользователя
+  UserProfile user_profile = 1;
+}
+
+// Запрос на получение профиля пользователя по никнейму
+message GetProfileByNicknameRequest {
+  // Отображаемое имя пользователя для поиска
+  string nickname = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string = {
+      min_len: 5,
+      max_len: 20
+    }
+  ];
+}
+
+// Ответ на запрос получения профиля по никнейму
+message GetProfileByNicknameResponse {
+  // Найденный профиль пользователя
+  UserProfile user_profile = 1;
+}
+
+// Запрос на поиск пользователей по частичному совпадению никнейма
+message SearchProfileByNicknameRequest {
+  // Строка поискового запроса (часть никнейма для поиска)
+  string query = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 3
+  ];
+  // Параметры пагинации для управления результатами поиска
+  Pagination pagination = 2;
+}
+
+// Ответ на запрос поиска пользователей
+message SearchProfileByNicknameResponse {
+  // Список найденных профилей пользователей
+  repeated UserProfile results = 1;
+  // Информация о пагинации для навигации по результатам
+  Pagination pagination = 2;
+}

@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.auth.api.auth.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "pkg/api/auth;auth";
+
+// Учетные данные пользователя для аутентификации
+message Credentials {
+  // Email пользователя
+  string email = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.email = true
+  ];
+  // Пароль пользователя
+  string password = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 8
+  ];
+}
+
+// Токены аутентификации, возвращаемые при успешном входе
+message Token {
+  // Access token для авторизации API запросов
+  string access_token = 1;
+  // Refresh token для обновления access token
+  string refresh_token = 2;
+  // Идентификатор пользователя, связанный с токенами
+  uint32 user_id = 3;
+}
+
+// Запрос на регистрацию нового пользователя в системе
+message RegisterRequest {
+  // Учетные данные для создания нового аккаунта
+  Credentials credentials = 1 [
+    (buf.validate.field).required = true
+  ];
+}
+
+// Ответ на успешную регистрацию пользователя
+message RegisterResponse {
+  // Идентификатор созданного пользователя
+  uint32 user_id = 1;
+}
+
+// Запрос на аутентификацию существующего пользователя
+message LoginRequest {
+  // Учетные данные для входа в систему
+  Credentials credentials = 1 [
+    (buf.validate.field).required = true
+  ];
+}
+
+// Ответ на успешную аутентификацию
+message LoginResponse {
+  // Сгенерированные токены доступа
+  Token token = 1;
+}
+
+// Запрос на обновление access token с помощью refresh token
+message RefreshRequest {
+  // Refresh token, полученный при предыдущей аутентификации
+  string refresh_token = 1 [
+    (buf.validate.field).string.min_len = 1,
+    (buf.validate.field).required = true
+  ];
+}
+
+// Ответ с обновленными токенами доступа
+message RefreshResponse {
+  // Новые токены доступа
+  Token token = 1;
+}

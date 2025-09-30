@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.auth.api.auth.v1;
+
+option go_package = "pkg/api/auth;auth";
+
+import "api/auth/v1/messages.proto";
+import "google/api/annotations.proto";
+
+service AuthService {
+  // Регистрация аккаунта
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/register"
+      body: "*"
+    };
+  }
+
+  // Вход в аккаунт
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/login"
+      body: "*"
+    };
+  }
+  
+  // Обновление токена
+  rpc Refresh(RefreshRequest) returns (RefreshResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/refresh"
+      body: "*"
+    };
+  }
+}

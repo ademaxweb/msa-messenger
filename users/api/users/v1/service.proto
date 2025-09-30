@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package github.com.ademaxweb.msa_messenger.users.api.users.v1;
+
+import "api/users/v1/messages.proto";
+import "google/api/annotations.proto";
+
+option go_package = "pkg/api/users;users";
+
+
+service UsersService {
+  // Создание нового профиля пользователя
+  rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/users"
+      body: "*"
+    };
+  }
+
+  // Обновление существующего профиля пользователя
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/users/{user_id}"
+      body: "*"
+    };
+  }
+
+  // Получение профиля пользователя по идентификатору
+  rpc GetProfileByID(GetProfileByIDRequest) returns (GetProfileByIDResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/users/{user_id}"
+    };
+  }
+
+  // Получение профиля пользователя по никнейму
+  rpc GetProfileByNickname(GetProfileByNicknameRequest) returns (GetProfileByNicknameResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/users/by-nickname"
+    };
+  }
+
+  // Поиск пользователей по частичному совпадению никнейма
+  rpc SearchProfileByNickname(SearchProfileByNicknameRequest) returns (SearchProfileByNicknameResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/users/search"
+    };
+  }
+}
