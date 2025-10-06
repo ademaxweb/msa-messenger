@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"net"
-	usrsrv "users/internal/srv/users/v1"
+	handler "users/internal/app/controllers/grpc"
+	repo "users/internal/app/repositories/users"
+	"users/internal/app/usecases"
 	pb "users/pkg/api/users/v1"
 
 	"google.golang.org/grpc"
@@ -11,7 +13,10 @@ import (
 )
 
 func main() {
-	impl := usrsrv.NewServer()
+
+	usrRepo := repo.NewRepository()
+	usrService := usecases.NewUsersService(usrRepo)
+	impl := handler.NewHandler(usrService)
 
 	ls, err := net.Listen("tcp", ":8080")
 	if err != nil {
