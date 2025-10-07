@@ -14,8 +14,10 @@ enum FriendRequestStatus {
   STATUS_ACCEPTED = 1;
   // Заявка была отклонена получателем
   STATUS_DECLINED = 2;
+  // Друг был удалён
+  STATUS_REMOVED = 3;
 
-  reserved 3 to max;
+  reserved 4 to max;
 }
 
 // Курсорная пагинация
@@ -35,7 +37,7 @@ message FriendRequest {
   // Идентификатор пользователя, отправившего заявку
   uint32 sender_id = 2;
   // Идентификатор пользователя, получившего заявку
-  uint32 receiver_id = 3;
+  uint32 recipient_id = 3;
   // Текущий статус заявки
   FriendRequestStatus status = 4;
 }

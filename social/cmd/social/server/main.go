@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"net"
-	socialsrv "social/internal/srv/social/v1"
+	requestsRepository "social/internal/app/repositories/requests"
+
+	handler "social/internal/app/controllers/grpc"
 	pb "social/pkg/api/social/v1"
 
 	"google.golang.org/grpc"
@@ -11,7 +13,10 @@ import (
 )
 
 func main() {
-	impl := socialsrv.NewServer()
+
+	requestsRepo := requestsRepository.NewRepository()
+
+	impl := handler.NewHandler(requestsRepo)
 
 	ls, err := net.Listen("tcp", ":8080")
 	if err != nil {
