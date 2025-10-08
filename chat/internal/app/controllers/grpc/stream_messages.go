@@ -1,4 +1,4 @@
-package v1
+package grpc
 
 import (
 	pb "chat/pkg/api/chat/v1"
@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Server) StreamMessages(request *pb.StreamMessagesRequest, g grpc.ServerStreamingServer[pb.StreamMessagesResponse]) error {
+func (h *Handler) StreamMessages(request *pb.StreamMessagesRequest, g grpc.ServerStreamingServer[pb.StreamMessagesResponse]) error {
 	//TODO implement me
 	return status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
 }

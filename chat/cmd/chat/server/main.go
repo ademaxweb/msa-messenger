@@ -1,17 +1,22 @@
 package main
 
 import (
-	chatsrv "chat/internal/srv/chat/v1"
+	"chat/internal/app/repositories/chat"
 	pb "chat/pkg/api/chat/v1"
 	"log"
 	"net"
+
+	handler "chat/internal/app/controllers/grpc"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	impl := chatsrv.NewServer()
+
+	chatRepo := chat.NewRepository()
+
+	impl := handler.NewHandler(chatRepo)
 
 	ls, err := net.Listen("tcp", ":8080")
 	if err != nil {
