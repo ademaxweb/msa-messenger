@@ -20,6 +20,11 @@ type (
 		// GetUserChatsByUserID Получить список чатов пользователя по его ID
 		GetUserChatsByUserID(id uint32) ([]models.Chat, error)
 	}
+
+	// NameGenerator Генератор названий для чатов
+	NameGenerator interface {
+		Generate() string
+	}
 )
 
 type Interface interface {
@@ -40,11 +45,24 @@ type Interface interface {
 }
 
 type ChatService struct {
-	repo ChatRepository
+	repo    ChatRepository
+	nameGen NameGenerator
 }
 
-func NewChatService(repository ChatRepository) *ChatService {
+type defaultNameGenerator struct{}
+
+func (g *defaultNameGenerator) Generate() string {
+	return ""
+}
+
+func NewChatService(repository ChatRepository, nameGenerator NameGenerator) *ChatService {
+	ng := nameGenerator
+	if ng == nil {
+		ng = &defaultNameGenerator{}
+	}
+
 	return &ChatService{
-		repo: repository,
+		repo:    repository,
+		nameGen: ng,
 	}
 }

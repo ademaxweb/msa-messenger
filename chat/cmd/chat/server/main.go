@@ -3,6 +3,7 @@ package main
 import (
 	"chat/internal/app/repositories/chat"
 	pb "chat/pkg/api/chat/v1"
+	"chat/pkg/namegen"
 	"log"
 	"net"
 
@@ -16,7 +17,9 @@ func main() {
 
 	chatRepo := chat.NewRepository()
 
-	impl := handler.NewHandler(chatRepo)
+	nameGenerator := namegen.NewGenerator()
+
+	impl := handler.NewHandler(chatRepo, nameGenerator)
 
 	ls, err := net.Listen("tcp", ":8080")
 	if err != nil {

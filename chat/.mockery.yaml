@@ -1,0 +1,11 @@
+dir: "mocks"
+all: false
+pkgname: "mocks"
+packages:
+  chat/internal/app/usecases:
+    config:
+      dir: "{{.InterfaceDir}}/mocks"
+      filename: "{{.InterfaceName}}_mock.go"
+    interfaces:
+      ChatRepository:
+
