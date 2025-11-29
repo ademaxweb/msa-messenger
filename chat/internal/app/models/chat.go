@@ -1,8 +1,8 @@
 package models
 
 type Chat struct {
-	// Id уникальный идентификатор чата
-	Id uint32
+	// ID уникальный идентификатор чата
+	ID uint32
 	// Name название чата
 	Name string
 	// Description описание чата

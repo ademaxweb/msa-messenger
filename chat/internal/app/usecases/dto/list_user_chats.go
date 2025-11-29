@@ -1,5 +1,5 @@
 package dto
 
 type ListUserChats struct {
-	UserId uint32
+	UserID uint32
 }

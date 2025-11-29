@@ -6,7 +6,7 @@ import (
 )
 
 func (cs *ChatService) ListUserChats(o dto.ListUserChats) ([]models.Chat, error) {
-	chats, err := cs.repo.GetUserChatsByUserID(o.UserId)
+	chats, err := cs.repo.GetUserChatsByUserID(o.UserID)
 	if err != nil {
 		return nil, err
 	}

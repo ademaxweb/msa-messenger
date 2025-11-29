@@ -17,7 +17,7 @@ func (h *Handler) ListMessages(ctx context.Context, request *pb.ListMessagesRequ
 		return nil, status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
 	}
 
-	pbMessages := make([]*pb.Message, len(messages))
+	pbMessages := make([]*pb.Message, 0, len(messages))
 	for _, m := range messages {
 		pbMessages = append(pbMessages, pbMessageFromMessageModel(&m))
 	}

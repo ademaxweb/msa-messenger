@@ -16,6 +16,6 @@ func (us *UsersService) CreateProfile(o dto.CreateProfile) (*models.User, error)
 		return nil, err
 	}
 
-	u.Id = id
+	u.ID = id
 	return u, nil
 }

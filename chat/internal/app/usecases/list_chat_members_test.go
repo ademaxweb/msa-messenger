@@ -32,7 +32,7 @@ func TestChatService_ListChatMembers(t *testing.T) {
 			name: "Test 1. Positive",
 			args: args{
 				o: dto.ListChatMembers{
-					Id: 25,
+					ID: 25,
 				},
 			},
 			mock: func(t *testing.T) deps {
@@ -54,7 +54,7 @@ func TestChatService_ListChatMembers(t *testing.T) {
 			name: "Test 2. Negative - chat not found",
 			args: args{
 				o: dto.ListChatMembers{
-					Id: 15,
+					ID: 15,
 				},
 			},
 			mock: func(t *testing.T) deps {

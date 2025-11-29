@@ -21,6 +21,6 @@ func (h *Handler) CreateDirectChat(ctx context.Context, request *pb.CreateDirect
 	}
 
 	return &pb.CreateDirectChatResponse{
-		ChatId: chat.Id,
+		ChatId: chat.ID,
 	}, nil
 }

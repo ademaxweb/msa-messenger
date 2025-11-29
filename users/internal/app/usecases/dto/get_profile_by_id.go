@@ -1,5 +1,5 @@
 package dto
 
 type GetProfileByID struct {
-	Id uint32
+	ID uint32
 }

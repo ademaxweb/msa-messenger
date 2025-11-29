@@ -11,8 +11,8 @@ import (
 
 func (h *Handler) SendMessage(ctx context.Context, request *pb.SendMessageRequest) (*pb.SendMessageResponse, error) {
 	o := dto.SendMessage{
-		ChatId:   request.GetChatId(),
-		SenderId: 0, // TODO get sender id from headers
+		ChatID:   request.GetChatId(),
+		SenderID: 0, // TODO get sender id from headers
 		Text:     request.GetText(),
 	}
 

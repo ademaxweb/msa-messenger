@@ -6,14 +6,14 @@ import (
 )
 
 func (cs *ChatService) SendMessage(o dto.SendMessage) (*models.Message, error) {
-	_, err := cs.repo.GetChatByID(o.ChatId)
+	_, err := cs.repo.GetChatByID(o.ChatID)
 	if err != nil {
 		return nil, err
 	}
 
 	m := &models.Message{
-		ChatID: o.ChatId,
-		UserID: o.SenderId,
+		ChatID: o.ChatID,
+		UserID: o.SenderID,
 		Text:   o.Text,
 	}
 

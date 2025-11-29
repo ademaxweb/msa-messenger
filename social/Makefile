@@ -35,7 +35,7 @@ VENDOR_PROTO_PATH := $(CURDIR)/vendor.protobuf
 	--go_out=$(PKG_PROTO_PATH) --go_opt paths=source_relative \
 	--go-grpc_out=$(PKG_PROTO_PATH) --go-grpc_opt paths=source_relative \
 	--grpc-gateway_out=$(PKG_PROTO_PATH) --grpc-gateway_opt paths=source_relative --grpc-gateway_opt generate_unbound_methods=true \
-	$(PROTO_PATH)/notes/messages.proto $(PROTO_PATH)/notes/service.proto
+	$(PROTO_PATH)/social/v1/messages.proto $(PROTO_PATH)/social/v1/service.proto
 
 
 # go mod tidy
@@ -47,8 +47,8 @@ generate: .bin-deps .protoc-generate .tidy
 
 # Билд приложения
 build:
-	go build -o $(LOCAL_BIN) ./cmd/notes/client
-	go build -o $(LOCAL_BIN) ./cmd/notes/server 
+	go build -o $(LOCAL_BIN) ./cmd/social/client
+	go build -o $(LOCAL_BIN) ./cmd/social/server
 	
 # Объявляем, что текущие команды не являются файлами и
 # интсрументируем Makefile не искать изменения в файловой системе

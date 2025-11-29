@@ -15,8 +15,8 @@ func (s *Handler) ListRequests(ctx context.Context, request *pb.ListRequestsRequ
 	if err != nil {
 		return nil, status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
 	}
-	
-	pbRequests := make([]*pb.FriendRequest, len(requests))
+
+	pbRequests := make([]*pb.FriendRequest, 0, len(requests))
 
 	for _, r := range requests {
 		pbRequests = append(pbRequests, pbFriendRequestFromFriendRequestModel(&r))

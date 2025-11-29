@@ -13,7 +13,7 @@ func (s *Service) SearchProfileByNickname(ctx context.Context, request *pb.Searc
 		return nil, err
 	}
 
-	pbUsers := make([]*pb.UserProfile, len(users))
+	pbUsers := make([]*pb.UserProfile, 0, len(users))
 
 	for _, u := range users {
 		pbUsers = append(pbUsers, modelUserToUserProfile(&u))

@@ -62,7 +62,7 @@ func TestChatService_CreateDirectChat(t *testing.T) {
 				}
 			},
 			want: &models.Chat{
-				Id:   666,
+				ID:   666,
 				Name: chatName,
 			},
 			assertErr:   assert.NoError,

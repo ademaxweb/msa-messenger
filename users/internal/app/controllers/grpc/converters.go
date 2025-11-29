@@ -15,7 +15,7 @@ func dtoCreateProfileFromCreateProfileRequest(r *pb.CreateProfileRequest) dto.Cr
 
 func dtoGetProfileByIDFromGetProfileByIDRequest(r *pb.GetProfileByIDRequest) dto.GetProfileByID {
 	return dto.GetProfileByID{
-		Id: r.GetUserId(),
+		ID: r.GetUserId(),
 	}
 }
 
@@ -42,7 +42,7 @@ func dtoUpdateProfileFromUpdateProfileRequest(r *pb.UpdateProfileRequest) dto.Up
 
 func modelUserToUserProfile(m *models.User) *pb.UserProfile {
 	return &pb.UserProfile{
-		UserId:    m.Id,
+		UserId:    m.ID,
 		Nickname:  m.Name,
 		Bio:       m.Bio,
 		AvatarUrl: m.AvatarUrl,

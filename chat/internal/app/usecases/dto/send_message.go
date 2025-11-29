@@ -1,7 +1,7 @@
 package dto
 
 type SendMessage struct {
-	ChatId   uint32
-	SenderId uint32
+	ChatID   uint32
+	SenderID uint32
 	Text     string
 }

@@ -8,31 +8,31 @@ import (
 
 func dtoGetChatFromGetChatRequest(request *pb.GetChatRequest) dto.GetChat {
 	return dto.GetChat{
-		Id: request.ChatId,
+		ID: request.GetChatId(),
 	}
 }
 
 func dtoListChatMembersFromListChatMembersRequest(request *pb.ListChatMembersRequest) dto.ListChatMembers {
 	return dto.ListChatMembers{
-		Id: request.GetChatId(),
+		ID: request.GetChatId(),
 	}
 }
 
 func dtoListMessagesFromListMessagesRequest(request *pb.ListMessagesRequest) dto.ListMessages {
 	return dto.ListMessages{
-		Id: request.GetChatId(),
+		ID: request.GetChatId(),
 	}
 }
 
 func dtoListUserChatsFromListUserChatsRequest(request *pb.ListUserChatsRequest) dto.ListUserChats {
 	return dto.ListUserChats{
-		UserId: request.GetUserId(),
+		UserID: request.GetUserId(),
 	}
 }
 
 func pbChatFromChatModel(chat *models.Chat) *pb.Chat {
 	return &pb.Chat{
-		Id:          chat.Id,
+		Id:          chat.ID,
 		Name:        chat.Name,
 		Description: chat.Description,
 		AvatarUrl:   chat.AvatarURL,

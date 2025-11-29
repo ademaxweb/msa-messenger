@@ -32,7 +32,7 @@ func TestChatService_GetChat(t *testing.T) {
 			name: "Test 1. Positive",
 			args: args{
 				o: dto.GetChat{
-					Id: 15,
+					ID: 15,
 				},
 			},
 			mock: func(t *testing.T) deps {
@@ -42,7 +42,7 @@ func TestChatService_GetChat(t *testing.T) {
 					GetChatByID(uint32(15)).
 					Return(
 						&models.Chat{
-							Id:          15,
+							ID:          15,
 							Name:        "Бесцветный чат №0",
 							Description: "just a test chat",
 							AvatarURL:   "123.png",
@@ -56,7 +56,7 @@ func TestChatService_GetChat(t *testing.T) {
 				}
 			},
 			want: &models.Chat{
-				Id:          15,
+				ID:          15,
 				Name:        "Бесцветный чат №0",
 				Description: "just a test chat",
 				AvatarURL:   "123.png",
@@ -68,7 +68,7 @@ func TestChatService_GetChat(t *testing.T) {
 			name: "Test 2. Negative - chat not found",
 			args: args{
 				o: dto.GetChat{
-					Id: 15,
+					ID: 15,
 				},
 			},
 			mock: func(t *testing.T) deps {

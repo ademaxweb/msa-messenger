@@ -1,5 +1,5 @@
 package dto
 
 type StreamMessages struct {
-	ChatId uint32
+	ChatID uint32
 }

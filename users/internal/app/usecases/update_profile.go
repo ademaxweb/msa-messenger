@@ -7,7 +7,7 @@ import (
 
 func (us *UsersService) UpdateProfile(o dto.UpdateProfile) (*models.User, error) {
 	u := &models.User{
-		Id:        o.Id,
+		ID:        o.Id,
 		Name:      o.Name,
 		Bio:       o.Bio,
 		AvatarUrl: o.AvatarUrl,

@@ -17,7 +17,7 @@ func (h *Handler) ListUserChats(ctx context.Context, request *pb.ListUserChatsRe
 		return nil, status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
 	}
 
-	pbChats := make([]*pb.Chat, len(chats))
+	pbChats := make([]*pb.Chat, 0, len(chats))
 	for _, c := range chats {
 		pbChats = append(pbChats, pbChatFromChatModel(&c))
 	}

@@ -22,7 +22,7 @@ func (cs *ChatService) CreateDirectChat(o dto.CreateDirectChat) (*models.Chat, e
 		return nil, err
 	}
 
-	c.Id = chatId
+	c.ID = chatId
 
 	return c, nil
 }

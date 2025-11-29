@@ -32,7 +32,7 @@ func TestChatService_ListUserChats(t *testing.T) {
 			name: "Test 1. Positive",
 			args: args{
 				o: dto.ListUserChats{
-					UserId: 30,
+					UserID: 30,
 				},
 			},
 			mock: func(t *testing.T) deps {
@@ -43,11 +43,11 @@ func TestChatService_ListUserChats(t *testing.T) {
 					Return(
 						[]models.Chat{
 							{
-								Id:   500,
+								ID:   500,
 								Name: "Бесцветный чат №0",
 							},
 							{
-								Id:   501,
+								ID:   501,
 								Name: "Бесцветный чат №1",
 							},
 						},
@@ -61,11 +61,11 @@ func TestChatService_ListUserChats(t *testing.T) {
 			},
 			want: []models.Chat{
 				{
-					Id:   500,
+					ID:   500,
 					Name: "Бесцветный чат №0",
 				},
 				{
-					Id:   501,
+					ID:   501,
 					Name: "Бесцветный чат №1",
 				},
 			},
@@ -76,7 +76,7 @@ func TestChatService_ListUserChats(t *testing.T) {
 			name: "Test 2. Positive. User has no chats",
 			args: args{
 				o: dto.ListUserChats{
-					UserId: 2215,
+					UserID: 2215,
 				},
 			},
 			mock: func(t *testing.T) deps {

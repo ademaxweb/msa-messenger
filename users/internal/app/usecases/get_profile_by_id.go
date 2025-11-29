@@ -6,7 +6,7 @@ import (
 )
 
 func (us *UsersService) GetProfileByID(o dto.GetProfileByID) (*models.User, error) {
-	u, err := us.repo.GetByID(o.Id)
+	u, err := us.repo.GetByID(o.ID)
 	if err != nil {
 		return nil, err
 	}

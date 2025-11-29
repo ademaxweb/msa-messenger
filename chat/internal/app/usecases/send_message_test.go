@@ -32,8 +32,8 @@ func TestChatService_SendMessage(t *testing.T) {
 			name: "Test 1. Positive",
 			args: args{
 				o: dto.SendMessage{
-					ChatId:   500,
-					SenderId: 30,
+					ChatID:   500,
+					SenderID: 30,
 					Text:     "How are you?",
 				},
 			},
@@ -44,7 +44,7 @@ func TestChatService_SendMessage(t *testing.T) {
 					GetChatByID(uint32(500)).
 					Return(
 						&models.Chat{
-							Id:   500,
+							ID:   500,
 							Name: "Бесцветный чат №0",
 						},
 						nil,
@@ -78,8 +78,8 @@ func TestChatService_SendMessage(t *testing.T) {
 			name: "Test 2. Negative - chat not found",
 			args: args{
 				o: dto.SendMessage{
-					ChatId:   320,
-					SenderId: 40,
+					ChatID:   320,
+					SenderID: 40,
 					Text:     "Have a nice day",
 				},
 			},

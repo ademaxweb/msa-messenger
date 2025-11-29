@@ -6,7 +6,7 @@ import (
 )
 
 func (cs *ChatService) GetChat(o dto.GetChat) (*models.Chat, error) {
-	c, err := cs.repo.GetChatByID(o.Id)
+	c, err := cs.repo.GetChatByID(o.ID)
 	if err != nil {
 		return nil, err
 	}
