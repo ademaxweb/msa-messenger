@@ -8,16 +8,18 @@ import "buf/validate/validate.proto";
 
 // Статус заявки в друзья
 enum FriendRequestStatus {
+  // Fallback статус заявки
+  STATUS_UNKNOWN = 0;
   // Заявка ожидает рассмотрения получателем
-  STATUS_PENDING = 0;
+  STATUS_PENDING = 1;
   // Заявка была принята получателем, пользователи стали друзьями
-  STATUS_ACCEPTED = 1;
+  STATUS_ACCEPTED = 2;
   // Заявка была отклонена получателем
-  STATUS_DECLINED = 2;
+  STATUS_DECLINED = 3;
   // Друг был удалён
-  STATUS_REMOVED = 3;
+  STATUS_REMOVED = 4;
 
-  reserved 4 to max;
+  reserved 5 to max;
 }
 
 // Курсорная пагинация

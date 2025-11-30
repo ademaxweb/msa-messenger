@@ -11,8 +11,8 @@ type Handler struct {
 	useCases usecases.Interface
 }
 
-func NewHandler(repo usecases.ChatRepository, nameGenerator usecases.NameGenerator) *Handler {
+func NewHandler(uc usecases.Interface) *Handler {
 	return &Handler{
-		useCases: usecases.NewChatService(repo, nameGenerator),
+		useCases: uc,
 	}
 }

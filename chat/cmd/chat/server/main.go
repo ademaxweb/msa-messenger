@@ -1,38 +1,41 @@
 package main
 
 import (
+	controllers "chat/internal/app/controllers/grpc"
 	"chat/internal/app/repositories/chat"
-	pb "chat/pkg/api/chat/v1"
+	"chat/internal/app/server"
+	"chat/internal/app/usecases"
 	"chat/pkg/namegen"
+	"context"
 	"log"
-	"net"
-
-	handler "chat/internal/app/controllers/grpc"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-
-	chatRepo := chat.NewRepository()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
 	nameGenerator := namegen.NewGenerator()
+	chatRepository := chat.NewRepository()
+	chatService := usecases.NewChatService(chatRepository, nameGenerator)
+	chatControllers := controllers.NewHandler(chatService)
 
-	impl := handler.NewHandler(chatRepo, nameGenerator)
-
-	ls, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+	srvCfg := server.Config{
+		Port:         ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{},
 	}
 
-	srv := grpc.NewServer()
+	srvDeps := server.Deps{
+		Controllers: server.Controllers{
+			Chat: chatControllers,
+		},
+	}
 
-	pb.RegisterChatServiceServer(srv, impl)
+	srv := server.New(srvCfg, srvDeps)
 
-	reflection.Register(srv)
-
-	if err := srv.Serve(ls); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
+	err := srv.Run(ctx)
+	if err != nil {
+		log.Fatalf("Error running server: %v", err)
 	}
 }

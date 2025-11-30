@@ -1,8 +1,10 @@
 package dto
 
-import pb "social/pkg/api/social/v1"
+import (
+	"social/internal/app/models"
+)
 
 type UpdateRequestStatus struct {
 	RequestId uint32
-	Status    pb.FriendRequestStatus
+	Status    models.FriendRequestStatus
 }

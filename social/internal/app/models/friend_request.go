@@ -1,6 +1,14 @@
 package models
 
-import pb "social/pkg/api/social/v1"
+type FriendRequestStatus int32
+
+const (
+	RequestStatusUnknown FriendRequestStatus = iota
+	RequestStatusPending
+	RequestStatusAccepted
+	RequestStatusDeclined
+	RequestStatusRemoved
+)
 
 type FriendRequest struct {
 	// Уникальный идентификатор
@@ -10,5 +18,5 @@ type FriendRequest struct {
 	// Идентификатор пользователя, получившего заявку
 	RecipientID uint32
 	// Текущий статус заявки
-	Status pb.FriendRequestStatus
+	Status FriendRequestStatus
 }

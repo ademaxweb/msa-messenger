@@ -11,10 +11,7 @@ type Handler struct {
 	useCases usecases.Interface
 }
 
-func NewHandler(repository usecases.RequestsRepository) *Handler {
-
-	uc := usecases.NewRequestsService(repository)
-
+func NewHandler(uc usecases.Interface) *Handler {
 	return &Handler{
 		useCases: uc,
 	}

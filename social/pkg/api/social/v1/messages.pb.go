@@ -26,29 +26,33 @@ const (
 type FriendRequestStatus int32
 
 const (
+	// Fallback статус заявки
+	FriendRequestStatus_STATUS_UNKNOWN FriendRequestStatus = 0
 	// Заявка ожидает рассмотрения получателем
-	FriendRequestStatus_STATUS_PENDING FriendRequestStatus = 0
+	FriendRequestStatus_STATUS_PENDING FriendRequestStatus = 1
 	// Заявка была принята получателем, пользователи стали друзьями
-	FriendRequestStatus_STATUS_ACCEPTED FriendRequestStatus = 1
+	FriendRequestStatus_STATUS_ACCEPTED FriendRequestStatus = 2
 	// Заявка была отклонена получателем
-	FriendRequestStatus_STATUS_DECLINED FriendRequestStatus = 2
+	FriendRequestStatus_STATUS_DECLINED FriendRequestStatus = 3
 	// Друг был удалён
-	FriendRequestStatus_STATUS_REMOVED FriendRequestStatus = 3
+	FriendRequestStatus_STATUS_REMOVED FriendRequestStatus = 4
 )
 
 // Enum value maps for FriendRequestStatus.
 var (
 	FriendRequestStatus_name = map[int32]string{
-		0: "STATUS_PENDING",
-		1: "STATUS_ACCEPTED",
-		2: "STATUS_DECLINED",
-		3: "STATUS_REMOVED",
+		0: "STATUS_UNKNOWN",
+		1: "STATUS_PENDING",
+		2: "STATUS_ACCEPTED",
+		3: "STATUS_DECLINED",
+		4: "STATUS_REMOVED",
 	}
 	FriendRequestStatus_value = map[string]int32{
-		"STATUS_PENDING":  0,
-		"STATUS_ACCEPTED": 1,
-		"STATUS_DECLINED": 2,
-		"STATUS_REMOVED":  3,
+		"STATUS_UNKNOWN":  0,
+		"STATUS_PENDING":  1,
+		"STATUS_ACCEPTED": 2,
+		"STATUS_DECLINED": 3,
+		"STATUS_REMOVED":  4,
 	}
 )
 
@@ -213,7 +217,7 @@ func (x *FriendRequest) GetStatus() FriendRequestStatus {
 	if x != nil {
 		return x.Status
 	}
-	return FriendRequestStatus_STATUS_PENDING
+	return FriendRequestStatus_STATUS_UNKNOWN
 }
 
 // Запрос на отправку заявки в друзья
@@ -836,12 +840,13 @@ const file_api_social_v1_messages_proto_rawDesc = "" +
 	"\x0ffriend_user_ids\x18\x01 \x03(\rR\rfriendUserIds\x12i\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2I.github.com.ademaxweb.msa_messenger.social.api.social.v1.CursorPaginationR\n" +
-	"pagination*q\n" +
+	"pagination*\x85\x01\n" +
 	"\x13FriendRequestStatus\x12\x12\n" +
-	"\x0eSTATUS_PENDING\x10\x00\x12\x13\n" +
-	"\x0fSTATUS_ACCEPTED\x10\x01\x12\x13\n" +
-	"\x0fSTATUS_DECLINED\x10\x02\x12\x12\n" +
-	"\x0eSTATUS_REMOVED\x10\x03\"\b\b\x04\x10\xff\xff\xff\xff\aB\x17Z\x15pkg/api/social;socialb\x06proto3"
+	"\x0eSTATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eSTATUS_PENDING\x10\x01\x12\x13\n" +
+	"\x0fSTATUS_ACCEPTED\x10\x02\x12\x13\n" +
+	"\x0fSTATUS_DECLINED\x10\x03\x12\x12\n" +
+	"\x0eSTATUS_REMOVED\x10\x04\"\b\b\x05\x10\xff\xff\xff\xff\aB\x17Z\x15pkg/api/social;socialb\x06proto3"
 
 var (
 	file_api_social_v1_messages_proto_rawDescOnce sync.Once
