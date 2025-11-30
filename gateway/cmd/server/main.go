@@ -22,19 +22,19 @@ func main() {
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
 
-	if err := auth.RegisterAuthServiceHandlerFromEndpoint(ctx, mux, "auth-service:8080", cfg); err != nil {
+	if err := auth.RegisterAuthServiceHandlerFromEndpoint(ctx, mux, "auth-service:50051", cfg); err != nil {
 		log.Fatalf("RegisterUsersServiceHandlerFromEndpoint error: %v", err)
 	}
 
-	if err := chat.RegisterChatServiceHandlerFromEndpoint(ctx, mux, "chat-service:8080", cfg); err != nil {
+	if err := chat.RegisterChatServiceHandlerFromEndpoint(ctx, mux, "chat-service:50051", cfg); err != nil {
 		log.Fatalf("RegisterUsersServiceHandlerFromEndpoint error: %v", err)
 	}
 
-	if err := social.RegisterSocialServiceHandlerFromEndpoint(ctx, mux, "social-service:8080", cfg); err != nil {
+	if err := social.RegisterSocialServiceHandlerFromEndpoint(ctx, mux, "social-service:50051", cfg); err != nil {
 		log.Fatalf("RegisterUsersServiceHandlerFromEndpoint error: %v", err)
 	}
 
-	if err := users.RegisterUsersServiceHandlerFromEndpoint(ctx, mux, "users-service:8080", cfg); err != nil {
+	if err := users.RegisterUsersServiceHandlerFromEndpoint(ctx, mux, "users-service:50051", cfg); err != nil {
 		log.Fatalf("RegisterUsersServiceHandlerFromEndpoint error: %v", err)
 	}
 

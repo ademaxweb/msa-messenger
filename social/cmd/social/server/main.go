@@ -1,31 +1,43 @@
 package main
 
 import (
+	"context"
 	"log"
-	"net"
-	socialsrv "social/internal/srv/social/v1"
-	pb "social/pkg/api/social/v1"
+	controllers "social/internal/app/controllers/grpc"
+	"social/internal/app/repositories/requests"
+	"social/internal/app/server"
+	"social/internal/app/usecases"
+	mwsGRPC "social/internal/middlewares/grpc"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	impl := socialsrv.NewServer()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-	ls, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+	reqRepository := requests.NewRepository()
+	socialService := usecases.NewRequestsService(reqRepository)
+	socialControllers := controllers.NewHandler(socialService)
+
+	srvCfg := server.Config{
+		Port: ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{
+			mwsGRPC.ConvertErrorUnaryServerInterceptor(),
+		},
 	}
 
-	server := grpc.NewServer()
-	pb.RegisterSocialServiceServer(server, impl)
+	srvDeps := server.Deps{
+		Controllers: server.Controllers{
+			Social: socialControllers,
+		},
+	}
 
-	reflection.Register(server)
+	srv := server.New(srvCfg, srvDeps)
 
-	log.Printf("server listening at %v", ls.Addr())
-	if err := server.Serve(ls); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+	err := srv.Run(ctx)
+	if err != nil {
+		log.Fatalf("Error running server: %v", err)
 	}
 
 }

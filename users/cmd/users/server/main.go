@@ -1,31 +1,42 @@
 package main
 
 import (
+	"context"
 	"log"
-	"net"
-	usrsrv "users/internal/srv/users/v1"
-	pb "users/pkg/api/users/v1"
+	handler "users/internal/app/controllers/grpc"
+	repo "users/internal/app/repositories/users"
+	"users/internal/app/server"
+	"users/internal/app/usecases"
+	middlewaresGRPC "users/internal/middlewares/grpc"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	impl := usrsrv.NewServer()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-	ls, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+	usrRepo := repo.NewRepository()
+	usrService := usecases.NewUsersService(usrRepo)
+	usrControllers := handler.NewHandler(usrService)
+
+	srvCfg := server.Config{
+		Port: ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{
+			middlewaresGRPC.ConvertErrorUnaryServerInterceptor(),
+		},
 	}
 
-	server := grpc.NewServer()
+	srvDeps := server.Deps{
+		Controllers: server.Controllers{
+			Users: usrControllers,
+		},
+	}
 
-	pb.RegisterUsersServiceServer(server, impl)
+	s := server.New(srvCfg, srvDeps)
 
-	reflection.Register(server)
-
-	log.Printf("server listening at %v", ls.Addr())
-	if err := server.Serve(ls); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+	err := s.Run(ctx)
+	if err != nil {
+		log.Fatalf("Error running server: %v", err)
 	}
 }
