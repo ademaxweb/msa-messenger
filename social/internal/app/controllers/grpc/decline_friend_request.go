@@ -3,9 +3,6 @@ package grpc
 import (
 	"context"
 	pb "social/pkg/api/social/v1"
-
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (s *Handler) DeclineFriendRequest(ctx context.Context, request *pb.DeclineFriendRequestRequest) (*pb.DeclineFriendRequestResponse, error) {
@@ -13,7 +10,7 @@ func (s *Handler) DeclineFriendRequest(ctx context.Context, request *pb.DeclineF
 
 	req, err := s.useCases.UpdateRequestStatus(dto)
 	if err != nil {
-		return nil, status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
+		return nil, err
 	}
 
 	return &pb.DeclineFriendRequestResponse{

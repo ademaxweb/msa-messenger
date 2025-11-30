@@ -4,9 +4,6 @@ import (
 	"chat/internal/app/usecases/dto"
 	pb "chat/pkg/api/chat/v1"
 	"context"
-
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (h *Handler) SendMessage(ctx context.Context, request *pb.SendMessageRequest) (*pb.SendMessageResponse, error) {
@@ -18,8 +15,7 @@ func (h *Handler) SendMessage(ctx context.Context, request *pb.SendMessageReques
 
 	message, err := h.useCases.SendMessage(o)
 	if err != nil {
-		// TODO implement errors handling
-		return nil, status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
+		return nil, err
 	}
 
 	return &pb.SendMessageResponse{

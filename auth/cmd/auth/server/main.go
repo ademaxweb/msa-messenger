@@ -4,6 +4,7 @@ import (
 	controllers "auth/internal/app/controllers/grpc"
 	"auth/internal/app/server"
 	"auth/internal/app/usecases"
+	mwsGRPC "auth/internal/middlewares/grpc"
 	"context"
 	"log"
 
@@ -25,8 +26,10 @@ func main() {
 	}
 
 	serverCfg := server.Config{
-		Port:         ":50051",
-		Interceptors: []grpc.UnaryServerInterceptor{},
+		Port: ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{
+			mwsGRPC.ConvertErrorUnaryServerInterceptor(),
+		},
 	}
 
 	serverDeps := server.Deps{

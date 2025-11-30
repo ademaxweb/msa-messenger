@@ -64,7 +64,7 @@ func TestChatService_ListChatMembers(t *testing.T) {
 					GetChatMembersByChatID(uint32(15)).
 					Return(
 						nil,
-						models.ChatNotFound,
+						models.ErrChatNotFound,
 					).
 					Once()
 
@@ -74,7 +74,7 @@ func TestChatService_ListChatMembers(t *testing.T) {
 			},
 			want:        nil,
 			assertErr:   assert.Error,
-			expectedErr: models.ChatNotFound,
+			expectedErr: models.ErrChatNotFound,
 		},
 	}
 

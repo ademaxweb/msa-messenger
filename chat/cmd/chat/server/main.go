@@ -5,6 +5,7 @@ import (
 	"chat/internal/app/repositories/chat"
 	"chat/internal/app/server"
 	"chat/internal/app/usecases"
+	mwsGRPC "chat/internal/middlewares/grpc"
 	"chat/pkg/namegen"
 	"context"
 	"log"
@@ -22,8 +23,10 @@ func main() {
 	chatControllers := controllers.NewHandler(chatService)
 
 	srvCfg := server.Config{
-		Port:         ":50051",
-		Interceptors: []grpc.UnaryServerInterceptor{},
+		Port: ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{
+			mwsGRPC.ConvertErrorUnaryServerInterceptor(),
+		},
 	}
 
 	srvDeps := server.Deps{

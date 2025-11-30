@@ -7,6 +7,7 @@ import (
 	repo "users/internal/app/repositories/users"
 	"users/internal/app/server"
 	"users/internal/app/usecases"
+	middlewaresGRPC "users/internal/middlewares/grpc"
 
 	"google.golang.org/grpc"
 )
@@ -20,8 +21,10 @@ func main() {
 	usrControllers := handler.NewHandler(usrService)
 
 	srvCfg := server.Config{
-		Port:         ":50051",
-		Interceptors: []grpc.UnaryServerInterceptor{},
+		Port: ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{
+			middlewaresGRPC.ConvertErrorUnaryServerInterceptor(),
+		},
 	}
 
 	srvDeps := server.Deps{

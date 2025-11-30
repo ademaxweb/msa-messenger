@@ -22,7 +22,7 @@ func main() {
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
 
-	if err := auth.RegisterAuthServiceHandlerFromEndpoint(ctx, mux, "auth-service:8080", cfg); err != nil {
+	if err := auth.RegisterAuthServiceHandlerFromEndpoint(ctx, mux, "auth-service:50051", cfg); err != nil {
 		log.Fatalf("RegisterUsersServiceHandlerFromEndpoint error: %v", err)
 	}
 
@@ -40,7 +40,7 @@ func main() {
 
 	srv := &http.Server{
 		Handler: mux,
-		Addr:    ":8081",
+		Addr:    ":8080",
 	}
 
 	if err := srv.ListenAndServe(); err != nil {

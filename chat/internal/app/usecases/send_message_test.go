@@ -90,7 +90,7 @@ func TestChatService_SendMessage(t *testing.T) {
 					GetChatByID(uint32(320)).
 					Return(
 						nil,
-						models.ChatNotFound,
+						models.ErrChatNotFound,
 					).
 					Once()
 
@@ -100,7 +100,7 @@ func TestChatService_SendMessage(t *testing.T) {
 			},
 			want:        nil,
 			assertErr:   assert.Error,
-			expectedErr: models.ChatNotFound,
+			expectedErr: models.ErrChatNotFound,
 		},
 	}
 

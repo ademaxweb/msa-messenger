@@ -87,7 +87,7 @@ func TestChatService_CreateDirectChat(t *testing.T) {
 			},
 			want:        nil,
 			assertErr:   assert.Error,
-			expectedErr: models.CannotChatToYourself,
+			expectedErr: models.ErrCannotChatToYourself,
 		},
 	}
 

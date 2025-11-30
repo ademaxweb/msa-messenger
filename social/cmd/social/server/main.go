@@ -7,6 +7,7 @@ import (
 	"social/internal/app/repositories/requests"
 	"social/internal/app/server"
 	"social/internal/app/usecases"
+	mwsGRPC "social/internal/middlewares/grpc"
 
 	"google.golang.org/grpc"
 )
@@ -20,8 +21,10 @@ func main() {
 	socialControllers := controllers.NewHandler(socialService)
 
 	srvCfg := server.Config{
-		Port:         ":50051",
-		Interceptors: []grpc.UnaryServerInterceptor{},
+		Port: ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{
+			mwsGRPC.ConvertErrorUnaryServerInterceptor(),
+		},
 	}
 
 	srvDeps := server.Deps{

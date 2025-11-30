@@ -3,7 +3,7 @@ package models
 import "errors"
 
 var (
-	ChatNotFound           = errors.New("chat not found")
-	CannotChatToYourself   = errors.New("cannot chat to yourself")
-	CannotSendEmptyMessage = errors.New("cannot send empty message")
+	ErrChatNotFound           = errors.New("chat not found")
+	ErrCannotChatToYourself   = errors.New("cannot chat to yourself")
+	ErrCannotSendEmptyMessage = errors.New("cannot send empty message")
 )

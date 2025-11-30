@@ -7,7 +7,7 @@ import (
 
 func (cs *ChatService) CreateDirectChat(o dto.CreateDirectChat) (*models.Chat, error) {
 	if o.SenderID == o.RecipientID {
-		return nil, models.CannotChatToYourself
+		return nil, models.ErrCannotChatToYourself
 	}
 
 	chatMembers := []uint32{o.SenderID, o.RecipientID}

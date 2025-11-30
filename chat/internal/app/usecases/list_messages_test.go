@@ -94,7 +94,7 @@ func TestChatService_ListMessages(t *testing.T) {
 					GetChatMessagesByChatID(uint32(15)).
 					Return(
 						nil,
-						models.ChatNotFound,
+						models.ErrChatNotFound,
 					).
 					Once()
 
@@ -104,7 +104,7 @@ func TestChatService_ListMessages(t *testing.T) {
 			},
 			want:        nil,
 			assertErr:   assert.Error,
-			expectedErr: models.ChatNotFound,
+			expectedErr: models.ErrChatNotFound,
 		},
 	}
 

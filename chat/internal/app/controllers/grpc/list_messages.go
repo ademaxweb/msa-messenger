@@ -3,9 +3,6 @@ package grpc
 import (
 	pb "chat/pkg/api/chat/v1"
 	"context"
-
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (h *Handler) ListMessages(ctx context.Context, request *pb.ListMessagesRequest) (*pb.ListMessagesResponse, error) {
@@ -13,8 +10,7 @@ func (h *Handler) ListMessages(ctx context.Context, request *pb.ListMessagesRequ
 
 	messages, err := h.useCases.ListMessages(dto)
 	if err != nil {
-		// TODO implement errors handling
-		return nil, status.New(codes.Unimplemented, codes.Unimplemented.String()).Err()
+		return nil, err
 	}
 
 	pbMessages := make([]*pb.Message, 0, len(messages))
