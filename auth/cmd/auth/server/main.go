@@ -1,30 +1,44 @@
 package main
 
 import (
-	authsrv "auth/internal/srv/users/v1"
-	pb "auth/pkg/api/auth/v1"
+	controllers "auth/internal/app/controllers/grpc"
+	"auth/internal/app/server"
+	"auth/internal/app/usecases"
+	"context"
 	"log"
-	"net"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	impl := authsrv.NewServer()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-	ls, err := net.Listen("tcp", ":8080")
+	authService := usecases.NewAuthService()
+	authControllers, err := controllers.New(
+		controllers.Deps{
+			AuthUsecases: authService,
+		},
+	)
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("failed to initialize auth controllers: %v", err)
 	}
 
-	srv := grpc.NewServer()
-	pb.RegisterAuthServiceServer(srv, impl)
+	serverCfg := server.Config{
+		Port:         ":50051",
+		Interceptors: []grpc.UnaryServerInterceptor{},
+	}
 
-	reflection.Register(srv)
+	serverDeps := server.Deps{
+		Controllers: server.Controllers{
+			Auth: authControllers,
+		},
+	}
 
-	log.Printf("Listening at %v", ls.Addr())
-	if err := srv.Serve(ls); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
+	s := server.New(serverCfg, serverDeps)
+
+	err = s.Run(ctx)
+	if err != nil {
+		log.Fatalf("Error running server: %v", err)
 	}
 }

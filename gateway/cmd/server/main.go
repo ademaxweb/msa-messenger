@@ -40,7 +40,7 @@ func main() {
 
 	srv := &http.Server{
 		Handler: mux,
-		Addr:    ":8080",
+		Addr:    ":8081",
 	}
 
 	if err := srv.ListenAndServe(); err != nil {
